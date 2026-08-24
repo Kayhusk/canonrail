@@ -124,7 +124,7 @@ class FoundationTests(unittest.TestCase):
     def test_portable_skill_separates_project_and_policy_roots(self):
         skill = (ROOT / "skills/canonrail/SKILL.md").read_text(encoding="utf-8")
         self.assertIn("Keep the project root separate from the loaded CanonRail skill", skill)
-        self.assertIn("`references/contracts/<kind>.md`", skill)
+        self.assertIn("read the matching linked contract listed above", skill)
         self.assertIn("Load CanonRail contracts only through linked skill references", skill)
         self.assertIn("Do not search the project for CanonRail package files", skill)
 
@@ -204,9 +204,19 @@ class FoundationTests(unittest.TestCase):
             self.assertIn(heading, evidence)
 
     def test_hermes_skill_tap_package_is_self_contained(self):
-        skill = (ROOT / "skills/canonrail/SKILL.md").read_text(encoding="utf-8")
+        skill_root = ROOT / "skills/canonrail"
+        skill = (skill_root / "SKILL.md").read_text(encoding="utf-8")
         for name in CONTRACTS:
             self.assertIn(f"](references/contracts/{CONTRACT_FILES[name]}.md)", skill)
+        referenced = re.findall(
+            r"(?:\]\(|`)((?:references|templates|scripts|assets|examples)/[^\s)`]+)",
+            skill,
+        )
+        self.assertTrue(referenced)
+        self.assertEqual(
+            [path for path in referenced if not (skill_root / path).is_file()],
+            [],
+        )
         self.assertFalse((ROOT / "plugin.yaml").exists())
         self.assertFalse((ROOT / "__init__.py").exists())
 

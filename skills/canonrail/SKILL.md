@@ -67,7 +67,7 @@ Complete when exactly one primary document responsibility is selected.
 
 ### 3. Read the contract
 
-Use the host's skill loader to read `references/contracts/<kind>.md` from the loaded CanonRail skill. Then identify the project files that own the facts the document needs.
+Use the host's skill loader to read the matching linked contract listed above. Then identify the project files that own the facts the document needs.
 
 The contract governs document responsibility. The project governs names, commands, architecture, status, and approval.
 
