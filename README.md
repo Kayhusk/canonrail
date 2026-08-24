@@ -32,6 +32,9 @@ This foundation defines contracts for:
 
 The contracts are deliberately small. New document types can be added without changing the validator or host adapters.
 
+- [Project plan](PLAN.md)
+- [Foundation source audit](docs/research/foundation-sources.md)
+
 ## Use
 
 Run the local foundation tests:

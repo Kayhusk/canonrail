@@ -16,6 +16,8 @@ KIND_HEADINGS = {
 }
 EXPECTED_FILES = (
     "README.md",
+    "PLAN.md",
+    "docs/research/foundation-sources.md",
     "AGENTS.md",
     "CONTRIBUTING.md",
     "LICENSE",
@@ -94,6 +96,19 @@ class FoundationTests(unittest.TestCase):
             self.assertRegex(config, rf"(?m)^  {re.escape(name)}:$")
         for path in ("AGENTS.md", "README.md", "PLAN.md", ".canonrail/plans/*.md", "docs/prd/**/*.md"):
             self.assertIn(path, config)
+
+    def test_plan_has_a_complete_source_audit(self):
+        plan = (ROOT / "PLAN.md").read_text(encoding="utf-8")
+        evidence = (ROOT / "docs/research/foundation-sources.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("docs/research/foundation-sources.md", plan)
+        for heading in ("## Status", "## Current phase", "## Next decision", "## Guardrails"):
+            self.assertIn(heading, plan)
+        for source_id in range(1, 18):
+            self.assertIn(f"S{source_id:02d}", evidence)
+        for heading in ("## Exact source wording", "## Foundation audit", "## Unsupported or deferred"):
+            self.assertIn(heading, evidence)
 
     def test_hermes_plugin_registers_the_portable_skill(self):
         plugin_path = ROOT / "__init__.py"

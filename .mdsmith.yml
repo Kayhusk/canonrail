@@ -6,6 +6,13 @@ overrides:
   - glob: ["skills/**/*.md"]
     rules:
       first-line-heading: false
+  - glob: ["docs/research/**/*.md"]
+    rules:
+      line-length: false
+      max-file-length: false
+      paragraph-readability: false
+      table-format: false
+      blockquote-whitespace: false
 
 kinds:
   agents:
