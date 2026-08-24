@@ -1,3 +1,6 @@
+---
+kinds: [execplan]
+---
 # Example execution plan
 
 ## Goal

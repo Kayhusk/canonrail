@@ -1,3 +1,6 @@
+---
+kinds: [agents]
+---
 # Example agent instructions
 
 ## Purpose

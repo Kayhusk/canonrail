@@ -3,6 +3,9 @@
 A PRD defines the user problem, desired outcomes, scope, and acceptance.
 It does not present implementation choices as settled decisions.
 
+CanonRail defines this PRD profile and its headings as a local product decision.
+Requirements information is standards-backed, but the term `PRD` and this shape are not universal standards.
+
 ## Owns
 
 - The problem and the people affected by it.

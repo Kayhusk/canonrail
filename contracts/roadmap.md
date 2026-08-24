@@ -3,6 +3,9 @@
 A roadmap records current sequence and decision authority.
 Its presence does not authorize implementation.
 
+CanonRail defines this profile and its headings as a local product decision.
+They are not requirements of an external roadmap standard.
+
 ## Owns
 
 - The current phase and active decision gate.

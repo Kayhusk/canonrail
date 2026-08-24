@@ -252,43 +252,30 @@ The same page places project-specific style before the general guide and states 
 | mdsmith as the current engine | S13 | Retain as a pinned pilot dependency | Do not present mdsmith as a formal standard or permanent architectural dependency. |
 | Agent-instructions contract | S05, S07, S16 | Retain, subject to line-level review | Exact headings and exclusions are CanonRail decisions. |
 | README contract | S02, S05, S17 | Retain, subject to line-level review | Exact sections and the first-example rule are CanonRail decisions. |
-| Roadmap contract | S01 | Provisional | `plan` is a standard information-item type; the current roadmap headings and authority language are local CanonRail rules. |
+| Roadmap contract | S01 | Retain as a CanonRail-local profile | `plan` is a standard information-item type; the headings and authority language are explicit local CanonRail rules. |
 | Execution-plan contract | S14 | Retain as an OpenAI-derived profile | ExecPlan is an OpenAI approach, not a universal standard. |
-| PRD contract | S15 | Provisional and narrowed | Requirements information is supported; `PRD` and the current headings are local choices. |
-| Document Topology Contracts | S01, S02, S03, S04, S05, S13 | Add to the plan only | See the selected scope below. Do not implement broader fields without evidence. |
+| PRD contract | S15 | Retain as a CanonRail-local profile | Requirements information is supported; `PRD` and the current headings are explicit local CanonRail choices. |
+| Document Topology Contracts | S01, S02, S03, S04, S05, S13 | Narrow to a kind and path-binding pilot | The pilot reuses mdsmith mechanisms. No source requires a combined universal topology field set. |
 | CI as the persisted deterministic gate | S07, S13 | Retain as a CanonRail decision | The sources support enforcement infrastructure; CanonRail selects required CI for reproducible project adoption. |
 | Plain public writing | S02, S17 | Retain | Unslop is an authoring method used during review, not a public CanonRail dependency or formal standard. |
 
 ## Selected topology scope
 
-The current evidence supports these required fields only:
+The approved pilot reuses the current mdsmith configuration and proves only:
 
-| Field | Evidence |
-|---|---|
-| `kind` | S01, S03, S13 |
-| `purpose` | S01 |
-| `audience` or information need | S02 |
-| `relationships` | S03, S04 |
-| `logical_order` when order matters | S04 |
-| `scope` for agent instructions | S05 |
-| `path_binding` chosen by the project | S01, S03, S13 |
+| Concern | Classification | Pilot decision |
+| --- | --- | --- |
+| `kind` | S01, S03, and S13 support document or model kinds; S13 supplies the current mechanism. | Resolve the expected primary kind for the selected CanonRail paths. |
+| project-selected path or glob | S13 directly supports `kind-assignment` globs. | Keep `.mdsmith.yml` as the physical binding owner. |
+| purpose | S01 supports purpose as a document concern. | Keep it in each semantic contract rather than duplicate it as machine metadata. |
+| audience or information need | S02 supports this concern for software user information. | Keep it in semantic review; do not promote it into a universal field. |
+| relationships | S03 and S04 provide architecture and DITA-specific precedent. | Defer until a CanonRail case defines identity, relation meaning, and an adjacent-invalid example. |
+| logical order | S04 provides DITA-specific ordered relationships. | Defer until a CanonRail case defines cardinality and invalid order. |
+| nested instruction scope | S05 supports nearest-file precedence for the AGENTS.md open format. | Defer cross-host enforcement and do not claim universal host parity. |
 
-The feature shall keep two sets separate:
+CanonRail's classification is a local decision. The sources do not require these concerns to become one universal topology schema.
 
-```text
-logical topology
-- kind
-- purpose
-- audience or information need
-- relationships
-- logical order, when order matters
-
-project binding
-- project-selected path or glob
-- nested instruction scope, when the host supports it
-```
-
-The quoted sources do not establish universal path names. CanonRail therefore shall not require one repository tree.
+The pilot creates no topology artifact. It keeps semantic contracts separate from project-selected path binding and adds no parser, runtime, hook, or dependency.
 
 ## Unsupported or deferred
 

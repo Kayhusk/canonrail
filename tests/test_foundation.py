@@ -1,11 +1,13 @@
 import importlib.util
 import json
 import re
+import subprocess
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+MDSMITH = ("npx", "--yes", "@mdsmith/cli@0.54.0")
 CONTRACTS = ("agents", "readme", "roadmap", "execplan", "prd")
 KIND_HEADINGS = {
     "agents": ("## Purpose", "## Project sources", "## Working rules", "## Verification"),
@@ -40,6 +42,18 @@ FORBIDDEN_PUBLIC_TERMS = (
     "MiglioHoldings",
     "/home/",
 )
+
+
+def run_mdsmith(*args, stdin=None):
+    return subprocess.run(
+        (*MDSMITH, *args),
+        cwd=ROOT,
+        input=stdin,
+        text=True,
+        capture_output=True,
+        timeout=60,
+        check=False,
+    )
 
 
 class FoundationTests(unittest.TestCase):
@@ -90,12 +104,33 @@ class FoundationTests(unittest.TestCase):
             missing = [heading for heading in headings if heading not in invalid]
             self.assertEqual(len(missing), 1, f"{name} invalid fixture must miss one heading")
 
+            result = run_mdsmith("check", "--no-color", "-", stdin=invalid)
+            output = result.stdout + result.stderr
+            self.assertEqual(result.returncode, 1, output)
+            diagnostics = re.findall(r"(?m)^<stdin>:[0-9]+:[0-9]+ (MDS[0-9]+)", output)
+            self.assertEqual(diagnostics, ["MDS020"], output)
+            self.assertIn(missing[0], output)
+
     def test_mdsmith_config_maps_every_contract_kind(self):
         config = (ROOT / ".mdsmith.yml").read_text(encoding="utf-8")
         for name in CONTRACTS:
             self.assertRegex(config, rf"(?m)^  {re.escape(name)}:$")
         for path in ("AGENTS.md", "README.md", "PLAN.md", ".canonrail/plans/*.md", "docs/prd/**/*.md"):
             self.assertIn(path, config)
+
+    def test_canonrail_pilot_resolves_only_selected_path_bindings(self):
+        cases = (
+            ("AGENTS.md", ["agents"]),
+            ("README.md", ["readme"]),
+            ("PLAN.md", ["roadmap"]),
+            ("docs/research/foundation-sources.md", []),
+        )
+        for path, expected in cases:
+            result = run_mdsmith("kinds", "resolve", path)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            kinds_section = result.stdout.split("effective kinds:\n", 1)[1].split("rules:\n", 1)[0]
+            resolved = re.findall(r"(?m)^  - ([a-z0-9_-]+)", kinds_section)
+            self.assertEqual(resolved, expected, path)
 
     def test_plan_has_a_complete_source_audit(self):
         plan = (ROOT / "PLAN.md").read_text(encoding="utf-8")

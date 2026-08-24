@@ -1,3 +1,6 @@
+---
+kinds: [roadmap]
+---
 # Example roadmap
 
 ## Status
