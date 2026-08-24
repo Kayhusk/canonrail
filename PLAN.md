@@ -3,7 +3,7 @@
 ## Status
 
 Foundation reconciliation is active. The bounded pilot, five current document contracts, public install paths, and consumer behavior in Hermes and Codex are locally verified.
-Claude Code runtime validation remains deferred. CanonRail still has no stable release or approved project rollout.
+Claude Code runtime validation remains deferred, and its adapter is disabled by default. CanonRail still has no stable release or approved project rollout.
 
 The exact external wording and current audit live in
 [Foundation source audit](docs/research/foundation-sources.md).
@@ -47,7 +47,7 @@ It does not become the source of project truth.
 | Execution plan contract     | OpenAI-derived contract  | S14           | Retain the living-plan requirements and label the headings and execution-authority boundary as CanonRail-local.            |
 | PRD contract                | CanonRail-local contract | S15           | Retain the current profile as a local choice for requirements information. Do not call `PRD` or its headings standardized. |
 | Portable Agent Skill        | Consumer verified        | S06, S08, S11 | Hermes and Codex loaded linked contracts from the installed skill while reviewing a separate consumer repository.          |
-| Claude adapter              | Runtime deferred         | S10, S11      | Retain the package, but do not call it host-verified without an authenticated Claude Code run.                             |
+| Claude adapter              | Disabled and deferred    | S10, S11      | Keep the valid package disabled by default and do not call it host-verified without an authenticated Claude Code run.      |
 | Codex adapter               | Host verified            | S08, S09      | Codex installed the root package through its repository marketplace and completed a read-only consumer review.             |
 | Hermes adapter              | Host verified            | S12           | Hermes passed Plugin Doctor and loaded linked contract references in an isolated consumer-review profile.                  |
 | mdsmith configuration       | Pinned pilot             | S13           | Use the current engine only for capabilities proven by a pinned execution.                                                 |
@@ -97,11 +97,11 @@ It must be labeled as local and must not be attributed to an external standard.
 4. Prove current kind resolution and project-selected path binding without adding a topology artifact.
 5. Reconcile the remaining current contract bullets before proposing broader semantic enforcement.
 6. Consider relationships, logical order, or instruction scope only after a real case defines deterministic semantics and adjacent-invalid behavior.
-7. Validate the portable skill independently in Hermes, Claude Code, and Codex before release.
-8. Consider a release only after adapter checks and public wording review pass.
+7. Validate the portable skill independently in Hermes and Codex for the `0.1.0` release scope.
+8. Prepare a private `0.1.0` release candidate after host checks and public wording review pass.
 
-Items 1 through 5 and the Hermes and Codex portions of item 7 are locally verified.
-Item 6, the Claude portion of item 7, and item 8 remain pending.
+Items 1 through 5 and item 7 are locally verified.
+Item 6 remains deferred. Item 8 is active.
 
 ## Next decision
 
@@ -112,13 +112,13 @@ The portable skill passed representative matching and adjacent non-trigger cases
 
 Public Hermes and Codex install instructions and the repository Codex marketplace are locally verified. This does not create a stable release.
 
-Claude Code runtime validation remains deferred. Until it passes:
+Claude Code runtime validation remains deferred. For the `0.1.0` release candidate:
 
-- CanonRail remains unreleased;
-- the Claude adapter is package-only, not host-verified;
+- the Claude adapter remains disabled by default and is not host-verified;
 - no relationship, order, scope, hook, installation rollout, or project adoption work is approved.
 
-The next decision is whether to resume Claude Code runtime validation when an authenticated runtime is available.
+The next decision is acceptance of a private, immutable `0.1.0` candidate for Hermes and Codex.
+Repository visibility changes only after that candidate is functional, proven, documented, and ready to ship.
 
 ## Guardrails
 

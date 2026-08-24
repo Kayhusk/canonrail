@@ -5,5 +5,9 @@
   "author": {
     "name": "Edward Bowie",
     "url": "https://github.com/Kayhusk"
+  },
+  "defaultEnabled": false,
+  "metadata": {
+    "supportStatus": "deferred"
   }
 }

@@ -18,6 +18,7 @@ KIND_HEADINGS = {
 }
 EXPECTED_FILES = (
     "README.md",
+    "CHANGELOG.md",
     "PLAN.md",
     "docs/research/foundation-sources.md",
     "AGENTS.md",
@@ -69,6 +70,8 @@ class FoundationTests(unittest.TestCase):
         )
         self.assertEqual(claude_manifest["name"], "canonrail")
         self.assertEqual(claude_manifest["version"], version)
+        self.assertIs(claude_manifest["defaultEnabled"], False)
+        self.assertEqual(claude_manifest["metadata"]["supportStatus"], "deferred")
 
         codex_manifest = json.loads(
             (ROOT / ".codex-plugin/plugin.json").read_text(encoding="utf-8")
@@ -106,6 +109,13 @@ class FoundationTests(unittest.TestCase):
         self.assertIn("hermes plugins doctor canonrail --ci", readme)
         self.assertIn("codex plugin marketplace add Kayhusk/canonrail --ref main", readme)
         self.assertIn("codex plugin add canonrail@canonrail", readme)
+        self.assertNotIn("### Claude Code", readme)
+
+    def test_release_notes_match_the_two_host_scope(self):
+        changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+        self.assertIn("## 0.1.0 - Unreleased", changelog)
+        self.assertIn("Hermes Agent and Codex CLI", changelog)
+        self.assertIn("Claude Code runtime support remains deferred", changelog)
 
     def test_portable_skill_handles_projects_without_mdsmith(self):
         skill = (ROOT / "skills/canonrail/SKILL.md").read_text(encoding="utf-8")

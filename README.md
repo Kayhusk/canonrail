@@ -32,10 +32,12 @@ This foundation defines contracts for:
 
 The contracts are deliberately small. New document types can be added without changing the validator or host adapters.
 
-Hermes and Codex have completed local host validation. The Claude Code package is included, but its runtime validation is deferred.
+Hermes and Codex have completed local host validation.
+The Claude Code adapter is disabled by default, and its runtime validation remains deferred.
 
 - [Project plan](PLAN.md)
 - [Foundation source audit](docs/research/foundation-sources.md)
+- [Changelog](CHANGELOG.md)
 
 ## Install
 
