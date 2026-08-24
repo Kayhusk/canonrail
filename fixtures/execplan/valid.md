@@ -1,0 +1,21 @@
+# Example execution plan
+
+## Goal
+
+Add one verified document contract.
+
+## Context
+
+The repository already validates Markdown structure.
+
+## Plan
+
+Add the contract, fixture, and focused check.
+
+## Validation
+
+Run the repository test and Markdown validator.
+
+## Recovery
+
+Revert the bounded change if either check fails.

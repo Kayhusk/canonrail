@@ -7,6 +7,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTRACTS = ("agents", "readme", "roadmap", "execplan", "prd")
+KIND_HEADINGS = {
+    "agents": ("## Purpose", "## Project sources", "## Working rules", "## Verification"),
+    "readme": ("## What it does", "## How it works", "## Current scope", "## Use", "## License"),
+    "roadmap": ("## Status", "## Current phase", "## Next decision", "## Guardrails"),
+    "execplan": ("## Goal", "## Context", "## Plan", "## Validation", "## Recovery"),
+    "prd": ("## Problem", "## Users", "## Outcomes", "## Scope", "## Acceptance"),
+}
 EXPECTED_FILES = (
     "README.md",
     "AGENTS.md",
@@ -66,6 +73,20 @@ class FoundationTests(unittest.TestCase):
             text = (ROOT / "contracts" / f"{name}.md").read_text(encoding="utf-8")
             for heading in required_headings:
                 self.assertIn(heading, text, f"{name}.md is missing {heading}")
+
+    def test_each_kind_has_valid_and_adjacent_invalid_fixtures(self):
+        for name, headings in KIND_HEADINGS.items():
+            fixture_dir = ROOT / "fixtures" / name
+            valid_path = fixture_dir / "valid.md"
+            invalid_path = fixture_dir / "invalid.md.txt"
+            self.assertTrue(valid_path.is_file(), f"missing {valid_path.relative_to(ROOT)}")
+            self.assertTrue(invalid_path.is_file(), f"missing {invalid_path.relative_to(ROOT)}")
+
+            valid = valid_path.read_text(encoding="utf-8")
+            invalid = invalid_path.read_text(encoding="utf-8")
+            self.assertTrue(all(heading in valid for heading in headings))
+            missing = [heading for heading in headings if heading not in invalid]
+            self.assertEqual(len(missing), 1, f"{name} invalid fixture must miss one heading")
 
     def test_mdsmith_config_maps_every_contract_kind(self):
         config = (ROOT / ".mdsmith.yml").read_text(encoding="utf-8")

@@ -1,0 +1,21 @@
+# Example product requirements
+
+## Problem
+
+Readers cannot tell which document owns current status.
+
+## Users
+
+Maintainers and coding agents use the affected documents.
+
+## Outcomes
+
+Each status statement has one current owner.
+
+## Scope
+
+Classify and validate the named document set.
+
+## Acceptance
+
+A duplicate current-status statement fails the project check.
