@@ -2,12 +2,12 @@
 
 A README gives people the project's description, quick start, and contribution entry point.
 
-The AGENTS.md open format keeps the human README separate from agent instructions.
+The open format keeps human README files separate from agent guidance.
 Other source guidance supports audience needs and clear, useful public information.
 
 CanonRail defines the details below as local policy. This includes the owners, exclusions, review rules, and required headings.
 They are not a universal README standard.
-The [foundation source audit](../../../../docs/research/foundation-sources.md#readme-contract) records the line-level disposition.
+The CanonRail foundation source audit records the line-level disposition.
 
 ## Owns
 

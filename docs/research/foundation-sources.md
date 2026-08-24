@@ -256,14 +256,33 @@ The same page says to exclude information that source can reveal, frequently cha
 
 **Does not decide:** CanonRail's full wording policy, README sections, required quick-start shape, or an automated semantic gate.
 
+### S18 - Hermes custom skill taps
+
+**Source class:** Current Nous Research Hermes Agent documentation.
+
+**Source:** <https://hermes-agent.nousresearch.com/docs/developer-guide/creating-skills>
+
+> Add your repo as a tap:
+
+> `hermes skills tap add owner/repo`
+
+> Users can then search and install from your repository.
+
+The same documentation defines `skills/<skill-name>/SKILL.md` with optional `references/` as the portable skill package layout.
+
+**Supports:** CanonRail can distribute its self-contained skill and linked contracts through a custom Hermes skill tap.
+
+**Does not decide:** CanonRail's contracts, project adoption, automatic installation, or a need for a Hermes plugin when no tools or hooks are present.
+
 ## Foundation audit
 
 | CanonRail piece | Evidence | Decision | Limitation |
 |---|---|---|---|
 | Objective: typed project-document guidance | S01, S02, S05, S15 | Retain, narrowed | CanonRail defines a reusable governance method; projects still own their facts and selected document set. |
 | Human README and agent instructions are separate | S05, S16, S17 | Retain | The current detailed contract bullets remain CanonRail rules, not requirements of the open format. |
-| Portable Agent Skill | S06, S08, S11 | Retain | Portability covers the format, not identical discovery or execution in every host. |
-| Plugin distribution | S08, S09, S10, S12 | Retain as adapters | A plugin is a host distribution form, not CanonRail's neutral policy owner. |
+| Portable Agent Skill | S06, S08, S11, S18 | Retain | Portability covers the format, not identical discovery or execution in every host. |
+| Plugin distribution | S08, S09, S10 | Retain for Codex and deferred Claude packaging | A plugin is a host distribution form, not CanonRail's neutral policy owner. |
+| Hermes skill distribution | S06, S18 | Retain as a custom skill tap | CanonRail has no Hermes tools or hooks, so a plugin would add an unnecessary install and scan boundary. |
 | Deterministic validation | S07, S13, S16 | Retain | The validator proves configured structure and paths, not semantic truth. |
 | mdsmith as the current engine | S13 | Retain as a pinned pilot dependency | Do not present mdsmith as a formal standard or permanent architectural dependency. |
 | Agent-instructions contract | S05, S07, S16 | Retain as a source-informed CanonRail profile | The dedicated entry point, concise persistent guidance, routing, host-defined scope, and deterministic checks are source-backed. Detailed ownership and exclusions are local. |

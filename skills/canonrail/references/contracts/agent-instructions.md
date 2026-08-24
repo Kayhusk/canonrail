@@ -7,7 +7,7 @@ The sources support a dedicated agent entry point, short persistent rules, routi
 
 CanonRail defines the details below as local policy. This includes the owners, exclusions, review rules, and required headings.
 Each host still owns its scope and precedence.
-The [foundation source audit](../../../../docs/research/foundation-sources.md#agent-instructions-contract) records the line-level disposition.
+The CanonRail foundation source audit records the line-level disposition.
 
 ## Owns
 

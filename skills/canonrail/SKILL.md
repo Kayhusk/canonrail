@@ -20,7 +20,7 @@ It uses project-owned facts, a contract for each document type, and deterministi
 
 Use CanonRail when creating or changing:
 
-- `AGENTS.md` or equivalent agent instructions;
+- agent instruction files;
 - a human-facing README;
 - a project roadmap;
 - a self-contained execution plan;
@@ -28,6 +28,14 @@ Use CanonRail when creating or changing:
 - another document type registered by the current policy pack.
 
 Do not use it to invent project facts, approve work, change execution authority, or replace the repository's current owners.
+
+## Contracts
+
+- [Agent guidance](references/contracts/agent-instructions.md)
+- [README](references/contracts/readme.md)
+- [Roadmap](references/contracts/roadmap.md)
+- [Execution plan](references/contracts/execplan.md)
+- [Product requirements](references/contracts/prd.md)
 
 ## Procedure
 
@@ -93,7 +101,7 @@ Complete when all configured checks pass and the semantic review finds no owners
 
 ## Boundaries
 
-- A plugin gives earlier feedback; CI remains the enforcement authority.
+- Host integrations give earlier feedback; configured repository checks remain the enforcement authority.
 - A schema verifies declared structure, not truth or good judgment.
 - Project-specific exceptions belong in the project and need an explicit reason and scope.
 - Do not add frontmatter to portable root files when path assignment can classify them.

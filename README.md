@@ -18,7 +18,10 @@ CanonRail combines three parts:
 2. A portable Agent Skill guides authoring and review.
 3. [mdsmith](https://mdsmith.dev/) validates saved Markdown when a project adopts the supplied configuration pattern.
 
-Hermes, Claude Code, and Codex adapters package the same skill. Project sources and configured repository checks remain authoritative.
+Hermes installs the portable skill directly.
+Codex packages the same skill through its plugin manifest.
+The deferred Claude Code manifest stays disabled by default.
+Project sources and configured repository checks remain authoritative.
 
 ## Current scope
 
@@ -41,16 +44,17 @@ The Claude Code adapter is disabled by default, and its runtime validation remai
 
 ## Install
 
-Use a current Hermes Agent or Codex CLI release with plugin support.
+Use a current Hermes Agent or Codex CLI release with skill support.
 
 ### Hermes Agent
 
 ```bash
-hermes plugins install Kayhusk/canonrail --enable
-hermes plugins doctor canonrail --ci
+hermes skills tap add Kayhusk/canonrail
+hermes skills install Kayhusk/canonrail/canonrail
+hermes skills check canonrail
 ```
 
-Start a new Hermes session after enabling the plugin.
+Start a new Hermes session after installing the skill.
 
 ### Codex CLI
 

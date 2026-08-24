@@ -29,7 +29,8 @@ The objective has this evidence chain:
 - S01 and S02 support information-item types and audience needs.
 - S06 supports the open skill format.
 - S08 supports the skill and plugin split.
-- S09 through S12 support the host adapters.
+- S09 through S11 support the Codex and Claude package formats.
+- S18 supports Hermes skill-tap distribution.
 - S13 supports the current validator mechanism.
 
 The project source remains authoritative for project facts, selected document types,
@@ -39,20 +40,20 @@ It does not become the source of project truth.
 
 ### Foundation disposition
 
-| Piece                       | Status                   | Evidence      | Current decision                                                                                                           |
-| --------------------------- | ------------------------ | ------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| Agent instructions contract | Source-informed contract | S05, S07, S16 | Retain the source-backed core and label the detailed ownership, exclusions, review rules, and headings as CanonRail-local. |
-| README contract             | Source-informed contract | S02, S05, S17 | Retain human orientation, quick starts, audience needs, and clear writing; label the detailed profile as CanonRail-local.  |
-| Roadmap contract            | CanonRail-local contract | S01           | Retain the current semantics and headings as explicit local choices, not an external standard.                             |
-| Execution plan contract     | OpenAI-derived contract  | S14           | Retain the living-plan requirements and label the headings and execution-authority boundary as CanonRail-local.            |
-| PRD contract                | CanonRail-local contract | S15           | Retain the current profile as a local choice for requirements information. Do not call `PRD` or its headings standardized. |
-| Portable Agent Skill        | Consumer verified        | S06, S08, S11 | Hermes and Codex loaded linked contracts from the installed skill while reviewing a separate consumer repository.          |
-| Claude adapter              | Disabled and deferred    | S10, S11      | Keep the valid package disabled by default and do not call it host-verified without an authenticated Claude Code run.      |
-| Codex adapter               | Host verified            | S08, S09      | Codex installed the root package through its repository marketplace and completed a read-only consumer review.             |
-| Hermes adapter              | Host verified            | S12           | Hermes passed Plugin Doctor and loaded linked contract references in an isolated consumer-review profile.                  |
-| mdsmith configuration       | Pinned pilot             | S13           | Use the current engine only for capabilities proven by a pinned execution.                                                 |
-| Required CI check           | CanonRail decision       | S07, S13      | Keep one persisted deterministic gate for adopted projects.                                                                |
-| Public wording policy       | Locally verified         | S02, S17      | Keep public text neutral and enforce the private-term check across publishable text files.                                 |
+| Piece                       | Status                   | Evidence           | Current decision                                                                                                           |
+| --------------------------- | ------------------------ | ------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| Agent instructions contract | Source-informed contract | S05, S07, S16      | Retain the source-backed core and label the detailed ownership, exclusions, review rules, and headings as CanonRail-local. |
+| README contract             | Source-informed contract | S02, S05, S17      | Retain human orientation, quick starts, audience needs, and clear writing; label the detailed profile as CanonRail-local.  |
+| Roadmap contract            | CanonRail-local contract | S01                | Retain the current semantics and headings as explicit local choices, not an external standard.                             |
+| Execution plan contract     | OpenAI-derived contract  | S14                | Retain the living-plan requirements and label the headings and execution-authority boundary as CanonRail-local.            |
+| PRD contract                | CanonRail-local contract | S15                | Retain the current profile as a local choice for requirements information. Do not call `PRD` or its headings standardized. |
+| Portable Agent Skill        | Consumer verified        | S06, S08, S11, S18 | Hermes and Codex loaded linked contracts from the installed skill while reviewing a separate consumer repository.          |
+| Claude adapter              | Disabled and deferred    | S10, S11           | Keep the valid package disabled by default and do not call it host-verified without an authenticated Claude Code run.      |
+| Codex adapter               | Host verified            | S08, S09           | Codex installed the root package through its repository marketplace and completed a read-only consumer review.             |
+| Hermes distribution         | Skill tap selected       | S06, S18           | Publish the self-contained skill through a Hermes tap; do not use a plugin for a package with no tools or hooks.           |
+| mdsmith configuration       | Pinned pilot             | S13                | Use the current engine only for capabilities proven by a pinned execution.                                                 |
+| Required CI check           | CanonRail decision       | S07, S13           | Keep one persisted deterministic gate for adopted projects.                                                                |
+| Public wording policy       | Locally verified         | S02, S17           | Keep public text neutral and enforce the private-term check across publishable text files.                                 |
 
 ### Bounded kind and path-binding pilot
 

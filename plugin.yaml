@@ -1,6 +1,0 @@
-name: canonrail
-version: 0.1.0
-description: Portable document contracts for AI agents and CI.
-author: Edward Bowie
-provides_skills:
-  - canonrail

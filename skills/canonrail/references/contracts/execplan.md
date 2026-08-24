@@ -9,7 +9,7 @@ The same guidance requires visible behavior, exact commands, current progress an
 
 CanonRail uses that guidance for this local profile. The contract and its required headings are not a universal plan standard.
 The plan itself does not authorize execution.
-The [foundation source audit](../../../../docs/research/foundation-sources.md#execution-plan-contract) records the line-level disposition.
+The CanonRail foundation source audit records the line-level disposition.
 
 ## Owns
 

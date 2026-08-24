@@ -1,4 +1,3 @@
-import importlib.util
 import json
 import re
 import subprocess
@@ -9,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MDSMITH = ("npx", "--yes", "@mdsmith/cli@0.54.0")
 CONTRACTS = ("agents", "readme", "roadmap", "execplan", "prd")
+CONTRACT_FILES = {**{name: name for name in CONTRACTS}, "agents": "agent-instructions"}
 KIND_HEADINGS = {
     "agents": ("## Purpose", "## Project sources", "## Working rules", "## Verification"),
     "readme": ("## What it does", "## How it works", "## Current scope", "## Use", "## License"),
@@ -27,14 +27,15 @@ EXPECTED_FILES = (
     "VERSION",
     ".gitignore",
     ".mdsmith.yml",
-    "plugin.yaml",
-    "__init__.py",
     ".claude-plugin/plugin.json",
     ".codex-plugin/plugin.json",
     ".agents/plugins/marketplace.json",
     "skills/canonrail/SKILL.md",
     ".github/workflows/ci.yml",
-    *(f"skills/canonrail/references/contracts/{name}.md" for name in CONTRACTS),
+    *(
+        f"skills/canonrail/references/contracts/{CONTRACT_FILES[name]}.md"
+        for name in CONTRACTS
+    ),
 )
 FORBIDDEN_PUBLIC_FRAGMENTS = (
     "/home/",
@@ -80,10 +81,6 @@ class FoundationTests(unittest.TestCase):
         self.assertEqual(codex_manifest["version"], version)
         self.assertEqual(codex_manifest["skills"], "./skills/")
 
-        hermes_manifest = (ROOT / "plugin.yaml").read_text(encoding="utf-8")
-        self.assertRegex(hermes_manifest, r"(?m)^name: canonrail$")
-        self.assertRegex(hermes_manifest, rf"(?m)^version: {re.escape(version)}$")
-        self.assertRegex(hermes_manifest, r"(?m)^  - canonrail$")
 
     def test_codex_marketplace_exposes_the_root_plugin(self):
         marketplace = json.loads(
@@ -105,8 +102,9 @@ class FoundationTests(unittest.TestCase):
 
     def test_readme_documents_verified_public_install_paths(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        self.assertIn("hermes plugins install Kayhusk/canonrail --enable", readme)
-        self.assertIn("hermes plugins doctor canonrail --ci", readme)
+        self.assertIn("hermes skills tap add Kayhusk/canonrail", readme)
+        self.assertIn("hermes skills install Kayhusk/canonrail/canonrail", readme)
+        self.assertIn("hermes skills check canonrail", readme)
         self.assertIn("codex plugin marketplace add Kayhusk/canonrail --ref main", readme)
         self.assertIn("codex plugin add canonrail@canonrail", readme)
         self.assertNotIn("### Claude Code", readme)
@@ -132,14 +130,20 @@ class FoundationTests(unittest.TestCase):
 
     def test_portable_skill_bundles_each_contract_as_a_reference(self):
         contract_dir = ROOT / "skills/canonrail/references/contracts"
-        missing = [name for name in CONTRACTS if not (contract_dir / f"{name}.md").is_file()]
+        missing = [
+            name
+            for name in CONTRACTS
+            if not (contract_dir / f"{CONTRACT_FILES[name]}.md").is_file()
+        ]
         self.assertEqual(missing, [])
 
     def test_each_contract_has_a_bounded_responsibility(self):
         required_headings = ("# ", "## Owns", "## Must not absorb", "## Review")
         for name in CONTRACTS:
             text = (
-                ROOT / "skills/canonrail/references/contracts" / f"{name}.md"
+                ROOT
+                / "skills/canonrail/references/contracts"
+                / f"{CONTRACT_FILES[name]}.md"
             ).read_text(encoding="utf-8")
             for heading in required_headings:
                 self.assertIn(heading, text, f"{name}.md is missing {heading}")
@@ -194,30 +198,17 @@ class FoundationTests(unittest.TestCase):
         self.assertIn("docs/research/foundation-sources.md", plan)
         for heading in ("## Status", "## Current phase", "## Next decision", "## Guardrails"):
             self.assertIn(heading, plan)
-        for source_id in range(1, 18):
+        for source_id in range(1, 19):
             self.assertIn(f"S{source_id:02d}", evidence)
         for heading in ("## Exact source wording", "## Foundation audit", "## Unsupported or deferred"):
             self.assertIn(heading, evidence)
 
-    def test_hermes_plugin_registers_the_portable_skill(self):
-        plugin_path = ROOT / "__init__.py"
-        spec = importlib.util.spec_from_file_location("canonrail_plugin", plugin_path)
-        self.assertIsNotNone(spec)
-        self.assertIsNotNone(spec.loader)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-
-        class Context:
-            def __init__(self):
-                self.skills = []
-
-            def register_skill(self, name, path):
-                self.skills.append((name, Path(path)))
-
-        context = Context()
-        module.register(context)
-        self.assertEqual([name for name, _ in context.skills], ["canonrail"])
-        self.assertTrue(context.skills[0][1].is_file())
+    def test_hermes_skill_tap_package_is_self_contained(self):
+        skill = (ROOT / "skills/canonrail/SKILL.md").read_text(encoding="utf-8")
+        for name in CONTRACTS:
+            self.assertIn(f"](references/contracts/{CONTRACT_FILES[name]}.md)", skill)
+        self.assertFalse((ROOT / "plugin.yaml").exists())
+        self.assertFalse((ROOT / "__init__.py").exists())
 
     def test_public_text_does_not_expose_private_project_jargon(self):
         listed = subprocess.run(
