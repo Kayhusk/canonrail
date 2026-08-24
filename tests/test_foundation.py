@@ -115,6 +115,18 @@ class FoundationTests(unittest.TestCase):
         self.assertIn("Hermes Agent and Codex CLI", changelog)
         self.assertIn("Claude Code runtime support remains deferred", changelog)
 
+    def test_portable_skill_trigger_is_specific_to_supported_documents(self):
+        skill = (ROOT / "skills/canonrail/SKILL.md").read_text(encoding="utf-8")
+        match = re.search(r"(?m)^description: (.+)$", skill)
+        if match is None:
+            self.fail("CanonRail skill description is missing")
+        description = match.group(1)
+        self.assertEqual(
+            description,
+            "Author/review AGENTS, READMEs, roadmaps, plans, and PRDs.",
+        )
+        self.assertLessEqual(len(description), 57)
+
     def test_portable_skill_handles_projects_without_mdsmith(self):
         skill = (ROOT / "skills/canonrail/SKILL.md").read_text(encoding="utf-8")
         self.assertIn("If the project declares a document-kind command", skill)

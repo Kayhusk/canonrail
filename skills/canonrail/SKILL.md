@@ -1,6 +1,6 @@
 ---
 name: canonrail
-description: Govern project documents through versioned contracts.
+description: Author/review AGENTS, READMEs, roadmaps, plans, and PRDs.
 version: 0.1.0
 author: Edward Bowie, Hermes Agent
 license: MIT
