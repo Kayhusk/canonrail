@@ -13,4 +13,4 @@ This repository provides a sample service.
 
 ## Working rules
 
-- Run the focused checks after changes.
+- Run the verification command below after changes.

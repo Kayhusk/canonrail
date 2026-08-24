@@ -15,7 +15,7 @@ The example covers local Markdown files.
 ## Use
 
 ```bash
-example check README.md
+npx --yes @mdsmith/cli@0.54.0 check README.md
 ```
 
 ## License

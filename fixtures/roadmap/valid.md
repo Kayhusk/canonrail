@@ -2,7 +2,7 @@
 
 ## Status
 
-Planning is active. Implementation is not authorized.
+Planning is active.
 
 ## Current phase
 
@@ -10,7 +10,7 @@ The team is reviewing the document contract.
 
 ## Next decision
 
-Decide whether the contract is ready for a pilot.
+Decide whether the contract is ready for a small trial.
 
 ## Guardrails
 

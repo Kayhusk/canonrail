@@ -6,6 +6,7 @@ overrides:
   - glob: ["skills/**/*.md"]
     rules:
       first-line-heading: false
+  # Preserve exact quotations and evidence-table formatting.
   - glob: ["docs/research/**/*.md"]
     rules:
       line-length: false

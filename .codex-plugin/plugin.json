@@ -1,7 +1,7 @@
 {
   "name": "canonrail",
   "version": "0.1.0",
-  "description": "Apply versioned document contracts across projects and AI coding tools.",
+  "description": "Define and validate project-document contracts across tools and CI.",
   "author": {
     "name": "Edward Bowie",
     "url": "https://github.com/Kayhusk"

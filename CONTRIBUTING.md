@@ -1,14 +1,15 @@
 # Contributing
 
-CanonRail accepts changes that make document contracts clearer, more portable, or easier to verify.
+CanonRail accepts changes that make its document contracts clearer, usable across projects and harnesses, or easier to check.
 
 ## Before changing a contract
 
-1. State the recurring failure the rule prevents.
-2. Confirm that the rule belongs in the shared contract rather than one project.
-3. Add a valid and adjacent-invalid example.
-4. Keep semantic guidance separate from deterministic checks.
-5. Run the full local verification.
+1. Explain the recurring mistake that the rule would prevent.
+2. Confirm that the rule applies across projects rather than to one repository.
+3. Add one example that should pass and one that differs only in the rule that should fail.
+4. Keep writing requirements separate from checks that a tool can run.
+5. Update the source audit when a claim about an external standard or tool changes.
+6. Run both repository checks.
 
 ## Verification
 
@@ -17,4 +18,4 @@ python -m unittest discover -s tests -v
 npx --yes @mdsmith/cli@0.54.0 check .
 ```
 
-Do not add a new runtime or dependency when the existing validator or standard library covers the requirement.
+Do not add a dependency or another checker when mdsmith or the Python standard library already covers the requirement.

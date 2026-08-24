@@ -1,6 +1,6 @@
 ---
 name: canonrail
-description: Author/review AGENTS, READMEs, roadmaps, plans, and PRDs.
+description: Write/review AGENTS, READMEs, roadmaps, plans, and PRDs.
 version: 0.1.0
 author: Edward Bowie, Hermes Agent
 license: MIT
@@ -13,25 +13,28 @@ metadata:
 
 # CanonRail
 
-CanonRail guides the creation and review of project documents.
-It uses project-owned facts, a contract for each document type, and deterministic validation of the saved files.
+CanonRail is a documentation framework that is not tied to one agent harness.
+It defines and validates contracts for project documents.
+This skill lets compatible agent tools apply those contracts inside a project repository.
 
 ## When to use
 
-Use CanonRail when creating or changing:
+Use this skill when creating or changing:
 
 - agent instruction files;
 - a human-facing README;
 - a project roadmap;
 - a self-contained execution plan;
 - a product requirements document;
-- another document type registered by the current policy pack.
+- another document type defined by the installed CanonRail package.
 
-Do not use it to invent project facts, approve work, change execution authority, or replace the repository's current owners.
+Do not use this skill to invent project facts or grant approval.
+Do not start unapproved work.
+Do not replace the files and systems that hold current project information.
 
-## Contracts
+## Document contracts
 
-- [Agent guidance](references/contracts/agent-instructions.md)
+- [Agent instructions](references/contracts/agent-instructions.md)
 - [README](references/contracts/readme.md)
 - [Roadmap](references/contracts/roadmap.md)
 - [Execution plan](references/contracts/execplan.md)
@@ -39,80 +42,84 @@ Do not use it to invent project facts, approve work, change execution authority,
 
 ## Procedure
 
-### 1. Identify the project root
+### 1. Find the project root
 
-Work from the repository that owns the target document. Read its current instructions and direct sources before relying on session history or generated summaries.
+Work from the repository that contains the target document.
+Read its current instructions and source files before using session history or generated summaries.
 
-Keep the project root separate from the loaded CanonRail skill.
+Keep the project root separate from the installed CanonRail skill.
 Resolve target documents from the project root.
-Load CanonRail contracts only through linked skill references.
+Open CanonRail contracts only through the linked skill references above.
 Do not search the project for CanonRail package files.
 
-Complete when the project root, target path, and current project authority are known.
+Complete this step when the project root, target path, and controlling project instructions are known.
 
-### 2. Resolve the document kind
+### 2. Identify the document type
 
-If the project declares a document-kind command, run that exact command.
-The CanonRail repository uses `npx --yes @mdsmith/cli@0.54.0 kinds resolve <path>`.
+If the project provides a command that identifies document types, run that command exactly.
 
-If no document-kind command is configured, classify the document from its audience and authority.
-State that deterministic kind resolution is not configured.
-Do not invoke an absent validator or add project configuration.
+If the project has no such command, use its purpose, intended reader, and approval role to choose the document type.
+State that no automated type check is configured.
+Do not add configuration or invoke a checker that the project does not use.
 
-If the configured command resolves no kind, use the same semantic classification.
-Do not force the document into the nearest template.
-Add a new shared kind only when the responsibility recurs across projects.
+If the configured command returns no type, use the same purpose-and-reader review.
+Do not force the document into the closest template.
+Add a shared document type only when the same responsibility appears across projects.
 
-Complete when exactly one primary document responsibility is selected.
+Complete this step when one primary document type is selected.
 
-### 3. Read the contract
+### 3. Read the matching contract
 
-Use the host's skill loader to read the matching linked contract listed above. Then identify the project files that own the facts the document needs.
+Use the current tool's skill loader to open the matching linked contract.
+Then read the project files that contain the facts needed by the document.
 
-The contract governs document responsibility. The project governs names, commands, architecture, status, and approval.
+The contract says what belongs in the document.
+The project supplies names, commands, architecture, status, and approval.
 
-Complete when every material statement has a current project source or is labeled as an assumption.
+Complete this step when each material statement has a current project source or is clearly marked as an assumption.
 
-### 4. Write for the audience
+### 4. Write for the reader
 
 Keep the document direct and easy to scan:
 
 - answer the reader's first question early;
 - use the project's exact terms, paths, and commands;
-- state each fact once in its owner;
-- link to deeper detail instead of copying it;
-- separate current facts, plans, assumptions, and evidence;
-- remove filler, promotional language, vague advice, and private process terms.
+- state each fact once in the file that maintains it;
+- link to detailed material instead of copying it;
+- separate current facts, plans, assumptions, and test results;
+- remove filler, promotion, vague advice, and private process terms.
 
-Preserve exact legal, safety, protocol, accessibility, and authority language when wording is part of the contract.
+Preserve exact legal, safety, protocol, accessibility, and approval wording when the wording itself matters.
 
-Complete when every section serves the selected audience and responsibility.
+Complete this step when every section helps the intended reader understand, decide, act, or verify.
 
-### 5. Validate the saved document
+### 5. Check the saved document
 
-Run the project's declared document check when one exists. Then run the repository's own project checks and read the saved file as its intended reader.
+Run the project's document check when one exists.
+Then run the repository checks required for this document change and read the saved file as its intended reader.
 
-If no document check is configured, perform the semantic review.
-State that deterministic document validation is not configured.
+If no document check is configured, review the file against the matching contract.
+State that no automated document check is configured.
 
-Do not install a validator or copy CanonRail configuration unless the project has selected that adoption work.
+Do not install a checker or copy CanonRail configuration unless that setup work has been explicitly selected.
 
-Complete when all configured checks pass and the semantic review finds no ownership, authority, duplication, or unsupported-claim defect.
+Complete this step when the configured checks pass and the final read has no defects.
+Check for misplaced content, approval errors, repeated facts, and unsupported claims.
 
-## Boundaries
+## Limits
 
-- Host integrations give earlier feedback; configured repository checks remain the enforcement authority.
-- A schema verifies declared structure, not truth or good judgment.
-- Project-specific exceptions belong in the project and need an explicit reason and scope.
-- Do not add frontmatter to portable root files when path assignment can classify them.
-- Do not weaken a shared hard rule to make one stale document pass.
+- Tool integrations can catch errors early, but repository checks decide whether a saved file passes.
+- A schema can check declared structure. It cannot prove that the content is true or useful.
+- Project exceptions belong in the project and need a clear reason and scope.
+- Do not add front matter to common root files when path rules can identify them.
+- Do not weaken a shared rule to make an outdated document pass.
 
 ## Verification
 
-- [ ] The target resolved to the correct document kind
+- [ ] The target has the correct document type
 - [ ] Current project sources were read
-- [ ] Audience, owner, authority, and volatility are explicit
-- [ ] No private context or duplicated mutable status leaked into the document
-- [ ] The configured deterministic check passed, or its absence was stated
-- [ ] Project checks passed
-- [ ] Final readback matches the intended reader's needs
+- [ ] The intended reader, purpose, approval rules, source for each fact, and changing status are clear
+- [ ] The document contains no private context or repeated changing status
+- [ ] The configured document check passed, or its absence was stated
+- [ ] Required project checks passed
+- [ ] Final readback meets the intended reader's needs

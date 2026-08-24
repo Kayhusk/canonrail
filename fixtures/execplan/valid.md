@@ -2,7 +2,7 @@
 
 ## Goal
 
-Add one verified document contract.
+Add and verify one document contract.
 
 ## Context
 
@@ -10,12 +10,18 @@ The repository already validates Markdown structure.
 
 ## Plan
 
-Add the contract, fixture, and focused check.
+Add the contract, example, and focused check.
 
 ## Validation
 
-Run the repository test and Markdown validator.
+Run both commands from the repository root:
+
+```bash
+python -m unittest discover -s tests -v
+npx --yes @mdsmith/cli@0.54.0 check .
+```
 
 ## Recovery
 
-Revert the bounded change if either check fails.
+Inspect the failing output and correct the affected file.
+If the change must be abandoned, revert only files changed by this plan.

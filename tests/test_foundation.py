@@ -42,6 +42,56 @@ FORBIDDEN_PUBLIC_FRAGMENTS = (
     ".hermes/profiles/",
     ".codex/plugins/cache/",
 )
+PUBLIC_PROSE_FILES = (
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "PLAN.md",
+    "README.md",
+    ".agents/plugins/marketplace.json",
+    ".claude-plugin/plugin.json",
+    ".codex-plugin/plugin.json",
+    ".github/workflows/ci.yml",
+    ".mdsmith.yml",
+    "skills/canonrail/SKILL.md",
+    *(f"skills/canonrail/references/contracts/{CONTRACT_FILES[name]}.md" for name in CONTRACTS),
+    *(f"fixtures/{name}/valid.md" for name in CONTRACTS),
+    *(f"fixtures/{name}/invalid.md.txt" for name in CONTRACTS),
+)
+QUOTE_PROTECTED_PROSE_FILES = ("docs/research/foundation-sources.md",)
+FORBIDDEN_PUBLIC_PHRASES = (
+    "a testament to",
+    "adjacent-invalid",
+    "agent-portable",
+    "at its core",
+    "delve into",
+    "deterministic validation",
+    "document guide",
+    "foundation source audit",
+    "foundation stage",
+    "host adapter",
+    "host validation",
+    "line-level disposition",
+    "in order to",
+    "it is important to note",
+    "not just",
+    "policy pack",
+    "semantic review",
+    "serves as",
+    "setting the stage",
+    "source-informed",
+    "stands as",
+)
+FORBIDDEN_PROSE_CHARACTERS = {
+    "\u00a0": "non-breaking space",
+    "\u2013": "en dash",
+    "\u2014": "em dash",
+    "\u2018": "left single quotation mark",
+    "\u2019": "right single quotation mark",
+    "\u201c": "left double quotation mark",
+    "\u201d": "right double quotation mark",
+    "\u2026": "ellipsis",
+}
 PUBLIC_TEXT_SUFFIXES = {".json", ".md", ".py", ".txt", ".yaml", ".yml"}
 
 
@@ -57,20 +107,39 @@ def run_mdsmith(*args, stdin=None):
     )
 
 
-class FoundationTests(unittest.TestCase):
-    def test_required_foundation_files_exist(self):
+def public_prose_violations(relative, text):
+    violations = []
+    lowered = text.lower()
+    for phrase in FORBIDDEN_PUBLIC_PHRASES:
+        if phrase in lowered:
+            violations.append(f"{relative}: {phrase}")
+    for character, name in FORBIDDEN_PROSE_CHARACTERS.items():
+        if character in text:
+            violations.append(f"{relative}: {name}")
+    for character in sorted({character for character in text if not character.isascii()}):
+        if character not in FORBIDDEN_PROSE_CHARACTERS:
+            violations.append(f"{relative}: non-ASCII U+{ord(character):04X}")
+    return violations
+
+
+class CanonRailTests(unittest.TestCase):
+    def test_required_project_files_exist(self):
         missing = [path for path in EXPECTED_FILES if not (ROOT / path).is_file()]
         self.assertEqual(missing, [])
 
     def test_versions_match_across_plugin_manifests(self):
         version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
-        self.assertRegex(version, r"^0\.1\.0$")
+        self.assertRegex(version, r"^\d+\.\d+\.\d+$")
 
         claude_manifest = json.loads(
             (ROOT / ".claude-plugin/plugin.json").read_text(encoding="utf-8")
         )
+        expected_description = (
+            "Define and validate project-document contracts across tools and CI."
+        )
         self.assertEqual(claude_manifest["name"], "canonrail")
         self.assertEqual(claude_manifest["version"], version)
+        self.assertEqual(claude_manifest["description"], expected_description)
         self.assertIs(claude_manifest["defaultEnabled"], False)
         self.assertEqual(claude_manifest["metadata"]["supportStatus"], "deferred")
 
@@ -79,6 +148,7 @@ class FoundationTests(unittest.TestCase):
         )
         self.assertEqual(codex_manifest["name"], "canonrail")
         self.assertEqual(codex_manifest["version"], version)
+        self.assertEqual(codex_manifest["description"], expected_description)
         self.assertEqual(codex_manifest["skills"], "./skills/")
 
 
@@ -100,22 +170,65 @@ class FoundationTests(unittest.TestCase):
         self.assertEqual(plugin["category"], "Productivity")
         self.assertTrue((ROOT / plugin["source"]["path"] / ".codex-plugin/plugin.json").is_file())
 
-    def test_readme_documents_verified_public_install_paths(self):
+    def test_readme_preserves_current_install_blocks(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        self.assertIn("hermes skills tap add Kayhusk/canonrail", readme)
-        self.assertIn("hermes skills install Kayhusk/canonrail/canonrail", readme)
-        self.assertIn("hermes skills check canonrail", readme)
-        self.assertIn("codex plugin marketplace add Kayhusk/canonrail --ref main", readme)
-        self.assertIn("codex plugin add canonrail@canonrail", readme)
+        install_blocks = re.findall(
+            r"(?ms)^### (Hermes Agent|Codex CLI)\n\n```bash\n(.*?)\n```",
+            readme,
+        )
+        self.assertEqual(
+            install_blocks,
+            [
+                (
+                    "Hermes Agent",
+                    "hermes skills tap add Kayhusk/canonrail\n"
+                    "hermes skills install Kayhusk/canonrail/canonrail\n"
+                    "hermes skills check canonrail",
+                ),
+                (
+                    "Codex CLI",
+                    "codex plugin marketplace add Kayhusk/canonrail --ref main\n"
+                    "codex plugin add canonrail@canonrail\n"
+                    "codex plugin list --marketplace canonrail --json",
+                ),
+            ],
+        )
         self.assertNotIn("### Claude Code", readme)
 
-    def test_release_notes_match_the_two_host_scope(self):
-        changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
-        self.assertIn("## 0.1.0 - Unreleased", changelog)
-        self.assertIn("Hermes Agent and Codex CLI", changelog)
-        self.assertIn("Claude Code runtime support remains deferred", changelog)
+    def test_public_positioning_is_not_tied_to_one_harness(self):
+        statements = (
+            "CanonRail is a documentation framework that is not tied to one agent harness.",
+            "It defines and validates contracts for project documents.",
+        )
+        for relative in ("README.md", "AGENTS.md", "skills/canonrail/SKILL.md"):
+            text = (ROOT / relative).read_text(encoding="utf-8")
+            for statement in statements:
+                self.assertIn(statement, text, relative)
 
-    def test_portable_skill_trigger_is_specific_to_supported_documents(self):
+    def test_public_support_and_release_claims_match_owned_state(self):
+        version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+
+        self.assertIn(f"## {version} - Unreleased", changelog)
+        self.assertIn("Hermes Agent and Codex CLI", changelog)
+        self.assertIn("Claude Code support is not available in this version", changelog)
+        self.assertIn(f"Version {version} has not been released", changelog)
+
+        self.assertIn(
+            "The public install commands below have been tested with Hermes Agent and Codex CLI.",
+            readme,
+        )
+        self.assertIn(
+            "Claude Code is not supported yet. Its manifest is disabled while runtime testing remains deferred.",
+            readme,
+        )
+        self.assertIn(
+            f"CanonRail has no stable release. Installations from `main` may change before `v{version}` is released.",
+            readme,
+        )
+
+    def test_skill_trigger_names_the_supported_documents(self):
         skill = (ROOT / "skills/canonrail/SKILL.md").read_text(encoding="utf-8")
         match = re.search(r"(?m)^description: (.+)$", skill)
         if match is None:
@@ -123,24 +236,25 @@ class FoundationTests(unittest.TestCase):
         description = match.group(1)
         self.assertEqual(
             description,
-            "Author/review AGENTS, READMEs, roadmaps, plans, and PRDs.",
+            "Write/review AGENTS, READMEs, roadmaps, plans, and PRDs.",
         )
         self.assertLessEqual(len(description), 57)
 
-    def test_portable_skill_handles_projects_without_mdsmith(self):
+    def test_skill_handles_projects_without_mdsmith(self):
         skill = (ROOT / "skills/canonrail/SKILL.md").read_text(encoding="utf-8")
-        self.assertIn("If the project declares a document-kind command", skill)
-        self.assertIn("If no document-kind command is configured", skill)
+        self.assertIn("If the project provides a command that identifies document types", skill)
+        self.assertIn("If the project has no such command", skill)
+        self.assertIn("State that no automated type check is configured", skill)
         self.assertNotIn("\nRun:\n\n```bash\nmdsmith kinds resolve <path>", skill)
 
-    def test_portable_skill_separates_project_and_policy_roots(self):
+    def test_skill_separates_the_project_and_installation_roots(self):
         skill = (ROOT / "skills/canonrail/SKILL.md").read_text(encoding="utf-8")
-        self.assertIn("Keep the project root separate from the loaded CanonRail skill", skill)
-        self.assertIn("read the matching linked contract listed above", skill)
-        self.assertIn("Load CanonRail contracts only through linked skill references", skill)
+        self.assertIn("Keep the project root separate from the installed CanonRail skill", skill)
+        self.assertIn("Use the current tool's skill loader to open the matching linked contract", skill)
+        self.assertIn("Open CanonRail contracts only through the linked skill references above", skill)
         self.assertIn("Do not search the project for CanonRail package files", skill)
 
-    def test_portable_skill_bundles_each_contract_as_a_reference(self):
+    def test_skill_bundles_each_document_contract(self):
         contract_dir = ROOT / "skills/canonrail/references/contracts"
         missing = [
             name
@@ -149,8 +263,8 @@ class FoundationTests(unittest.TestCase):
         ]
         self.assertEqual(missing, [])
 
-    def test_each_contract_has_a_bounded_responsibility(self):
-        required_headings = ("# ", "## Owns", "## Must not absorb", "## Review")
+    def test_each_contract_has_required_boundary_headings(self):
+        required_headings = ("# ", "## Include", "## Keep elsewhere", "## Review")
         for name in CONTRACTS:
             text = (
                 ROOT
@@ -158,9 +272,13 @@ class FoundationTests(unittest.TestCase):
                 / f"{CONTRACT_FILES[name]}.md"
             ).read_text(encoding="utf-8")
             for heading in required_headings:
-                self.assertIn(heading, text, f"{name}.md is missing {heading}")
+                self.assertIn(
+                    heading,
+                    text,
+                    f"{CONTRACT_FILES[name]}.md is missing {heading}",
+                )
 
-    def test_each_kind_has_valid_and_adjacent_invalid_fixtures(self):
+    def test_each_document_type_has_passing_and_single_rule_failure_examples(self):
         for name, headings in KIND_HEADINGS.items():
             fixture_dir = ROOT / "fixtures" / name
             valid_path = fixture_dir / "valid.md"
@@ -188,11 +306,13 @@ class FoundationTests(unittest.TestCase):
         for path in ("AGENTS.md", "README.md", "PLAN.md", ".canonrail/plans/*.md", "docs/prd/**/*.md"):
             self.assertIn(path, config)
 
-    def test_canonrail_pilot_resolves_only_selected_path_bindings(self):
+    def test_config_resolves_each_kind_and_one_unselected_path(self):
         cases = (
             ("AGENTS.md", ["agents"]),
             ("README.md", ["readme"]),
             ("PLAN.md", ["roadmap"]),
+            ("fixtures/execplan/valid.md", ["execplan"]),
+            ("fixtures/prd/valid.md", ["prd"]),
             ("docs/research/foundation-sources.md", []),
         )
         for path, expected in cases:
@@ -202,17 +322,23 @@ class FoundationTests(unittest.TestCase):
             resolved = re.findall(r"(?m)^  - ([a-z0-9_-]+)", kinds_section)
             self.assertEqual(resolved, expected, path)
 
-    def test_plan_has_a_complete_source_audit(self):
+    def test_plan_links_the_source_audit_and_required_sections(self):
         plan = (ROOT / "PLAN.md").read_text(encoding="utf-8")
         evidence = (ROOT / "docs/research/foundation-sources.md").read_text(
             encoding="utf-8"
         )
         self.assertIn("docs/research/foundation-sources.md", plan)
+        self.assertIn("There is no automatic release step", plan)
+        self.assertIn("Any tag or GitHub release requires separate approval", plan)
+        self.assertIn(
+            "requires CI only when a project adopts automated CanonRail checks",
+            evidence,
+        )
         for heading in ("## Status", "## Current phase", "## Next decision", "## Guardrails"):
             self.assertIn(heading, plan)
         for source_id in range(1, 19):
             self.assertIn(f"S{source_id:02d}", evidence)
-        for heading in ("## Exact source wording", "## Foundation audit", "## Unsupported or deferred"):
+        for heading in ("## Exact source wording", "## Project decisions", "## Unsupported or deferred"):
             self.assertIn(heading, evidence)
 
     def test_hermes_skill_tap_package_is_self_contained(self):
@@ -232,7 +358,7 @@ class FoundationTests(unittest.TestCase):
         self.assertFalse((ROOT / "plugin.yaml").exists())
         self.assertFalse((ROOT / "__init__.py").exists())
 
-    def test_public_text_does_not_expose_private_project_jargon(self):
+    def test_public_text_does_not_expose_private_paths(self):
         listed = subprocess.run(
             ("git", "ls-files", "--cached", "--others", "--exclude-standard"),
             cwd=ROOT,
@@ -254,6 +380,45 @@ class FoundationTests(unittest.TestCase):
                 if fragment in text:
                     violations.append(f"{path.relative_to(ROOT)}: {fragment}")
         self.assertEqual(violations, [])
+
+    def test_public_prose_avoids_known_filler_jargon_and_non_ascii_text(self):
+        violations = []
+        for relative in PUBLIC_PROSE_FILES:
+            text = (ROOT / relative).read_text(encoding="utf-8")
+            violations.extend(public_prose_violations(relative, text))
+        for relative in QUOTE_PROTECTED_PROSE_FILES:
+            text = (ROOT / relative).read_text(encoding="utf-8")
+            authored_notes = "\n".join(
+                line for line in text.splitlines() if not line.startswith(">")
+            )
+            violations.extend(public_prose_violations(relative, authored_notes))
+        self.assertEqual(violations, [])
+
+    def test_every_authored_markdown_surface_has_a_prose_check(self):
+        listed = subprocess.run(
+            ("git", "ls-files", "*.md", "*.txt"),
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        checked = {
+            relative
+            for relative in (*PUBLIC_PROSE_FILES, *QUOTE_PROTECTED_PROSE_FILES)
+            if relative.endswith((".md", ".txt"))
+        }
+        unclassified = set(listed.stdout.splitlines()) - checked
+        self.assertEqual(unclassified, set())
+
+    def test_public_prose_check_rejects_nearby_bad_examples(self):
+        cases = (
+            ("It is important to note that checks pass.", "it is important to note"),
+            ("Checks pass — continue.", "em dash"),
+            ("Checks pass ✅", "non-ASCII U+2705"),
+        )
+        for text, expected in cases:
+            violations = public_prose_violations("example.md", text)
+            self.assertTrue(any(expected in violation for violation in violations), violations)
 
 
 if __name__ == "__main__":

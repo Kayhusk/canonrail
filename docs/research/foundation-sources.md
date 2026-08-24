@@ -1,14 +1,14 @@
-# CanonRail foundation source audit
+# CanonRail source audit
 
-This file owns the external evidence for CanonRail's objective, document contracts, portable skill, host adapters, validator, CI boundary, and proposed document topology feature.
+This file records the external sources behind CanonRail's document contracts, Agent Skill package, tool packages, Markdown checks, CI use, and proposed document relationship rules.
 
-It preserves exact source wording. The notes after each quotation state only what that wording supports and what it leaves to CanonRail or an adopting project.
+Quoted text is preserved exactly. Each note states what the source supports and what remains a CanonRail or project choice.
 
 ## Exact source wording
 
 ### S01 - ISO/IEC/IEEE 15289:2019
 
-**Source class:** Active IEEE/ISO/IEC standard catalog entry.
+**Source class:** IEEE/ISO/IEC standard catalog entry.
 
 **Source:** <https://standards.ieee.org/ieee/15289/7196/>
 
@@ -30,7 +30,7 @@ It preserves exact source wording. The notes after each quotation state only wha
 
 > This document provides requirements for the structure, information content, and format of information for users of software.
 
-**Supports:** Audience needs, presentation, structure, content, format, and maintenance as concerns for user-facing information.
+**Supports:** Audience needs, presentation, structure, content, and format as concerns for user-facing information.
 
 **Does not decide:** A universal README template, directory tree, or CanonRail wording rule.
 
@@ -94,7 +94,7 @@ The same specification lists `SKILL.md` as required and `scripts/`, `references/
 
 ### S07 - OpenAI Codex customization
 
-**Source class:** Current OpenAI product documentation.
+**Source class:** OpenAI product documentation.
 
 **Source:** <https://learn.chatgpt.com/docs/customization/overview>
 
@@ -112,31 +112,31 @@ The same page lists build and test commands, review expectations, repository-spe
 
 ### S08 - OpenAI skills and plugins
 
-**Source class:** Current OpenAI product documentation.
+**Source class:** OpenAI product documentation.
 
 **Source:** <https://learn.chatgpt.com/docs/build-skills>
 
 > Skills are the authoring format for reusable workflows. Plugins distribute reusable skills and connectors through the universal plugin directory shared by ChatGPT and Codex.
 
-**Supports:** CanonRail can keep its reusable workflow in a skill and distribute it through a plugin adapter.
+**Supports:** CanonRail can keep its reusable workflow in a skill and distribute that skill in a plugin package.
 
-**Does not decide:** Claude or Hermes plugin structure, one universal marketplace, or cross-host behavioral parity.
+**Does not decide:** Claude or Hermes plugin structure, one universal marketplace, or identical behavior in every tool.
 
 ### S09 - OpenAI plugin packaging
 
-**Source class:** Current OpenAI plugin documentation.
+**Source class:** OpenAI plugin documentation.
 
 **Source:** <https://developers.openai.com/plugins/build/plugins>
 
 > Packaging gives the plugin a stable identity and tells ChatGPT and Codex which skills, MCP server connections, and other resources belong together.
 
-**Supports:** A Codex adapter can package CanonRail's skill and related resources under one stable plugin identity.
+**Supports:** A Codex plugin can package CanonRail's skill and related resources under one stable identity.
 
 **Does not decide:** That CanonRail needs MCP, hooks, assets, or a public plugin listing.
 
 ### S10 - Claude Code plugins
 
-**Source class:** Current Anthropic product documentation.
+**Source class:** Anthropic product documentation.
 
 **Source:** <https://code.claude.com/docs/en/plugins>
 
@@ -144,13 +144,13 @@ The same page lists build and test commands, review expectations, repository-spe
 
 The same page describes plugins as self-contained directories with skills, agents, hooks, or a `.claude-plugin/plugin.json` manifest for sharing, distribution, versioned releases, and reuse across projects.
 
-**Supports:** A Claude adapter can package CanonRail for reuse across projects and teams.
+**Supports:** A Claude Code plugin can package CanonRail for reuse across projects and teams.
 
-**Does not decide:** Other host adapters or whether CanonRail needs hooks, agents, or MCP.
+**Does not decide:** Packages for other tools or whether CanonRail needs hooks, agents, or MCP.
 
 ### S11 - Claude Code skills
 
-**Source class:** Current Anthropic product documentation.
+**Source class:** Anthropic product documentation.
 
 **Source:** <https://code.claude.com/docs/en/skills>
 
@@ -162,7 +162,7 @@ The same page describes plugins as self-contained directories with skills, agent
 
 ### S12 - Hermes plugins
 
-**Source class:** Current Nous Research Hermes Agent documentation.
+**Source class:** Nous Research Hermes Agent documentation.
 
 **Source:** <https://hermes-agent.nousresearch.com/docs/user-guide/features/plugins>
 
@@ -170,7 +170,7 @@ The same page describes plugins as self-contained directories with skills, agent
 
 > Bundle skills | `ctx.register_skill(name, path)` — namespaced as `plugin:skill`, loaded via `skill_view("plugin:skill")`
 
-**Supports:** A standalone Hermes adapter can register the portable CanonRail skill without changing Hermes core.
+**Supports:** A Hermes plugin can register the portable CanonRail skill without changing Hermes core.
 
 **Does not decide:** CanonRail's policy, contract contents, or automatic plugin activation.
 
@@ -184,9 +184,9 @@ The same page describes plugins as self-contained directories with skills, agent
 
 > Bind files to a kind by a front-matter `kinds:` field or a `kind-assignment` glob.
 
-**Supports:** CanonRail's current deterministic mapping from file paths to document kinds and schemas.
+**Supports:** mdsmith can assign document types by path and check their declared schemas.
 
-**Does not decide:** Semantic truth, project authority, whether mdsmith remains the long-term engine, or the contract wording.
+**Does not decide:** CanonRail's current path mappings, semantic truth, project authority, whether mdsmith remains the long-term engine, or the contract wording.
 
 ### S14 - OpenAI ExecPlans
 
@@ -212,7 +212,7 @@ The same page describes plugins as self-contained directories with skills, agent
 
 ### S15 - ISO/IEC/IEEE 29148:2018
 
-**Source class:** Current published international standard catalog entry. A replacement is under development.
+**Source class:** ISO/IEC/IEEE standard catalog entry.
 
 **Source:** <https://www.iso.org/standard/72089.html>
 
@@ -220,13 +220,13 @@ The same page describes plugins as self-contained directories with skills, agent
 
 > — specifies the required contents of the required information items;
 
-**Supports:** CanonRail can treat requirements information as a distinct information-item class.
+**Supports:** Requirements processes produce required information items with required content. CanonRail separately decides to represent that concern as one document type.
 
 **Does not decide:** The term PRD, CanonRail's PRD headings, product-management workflow, prioritization, or approval state.
 
 ### S16 - Anthropic Claude Code best practices
 
-**Source class:** Current Anthropic product guidance.
+**Source class:** Anthropic product guidance.
 
 **Source:** <https://code.claude.com/docs/en/best-practices>
 
@@ -258,7 +258,7 @@ The same page says to exclude information that source can reveal, frequently cha
 
 ### S18 - Hermes custom skill taps
 
-**Source class:** Current Nous Research Hermes Agent documentation.
+**Source class:** Nous Research Hermes Agent documentation.
 
 **Source:** <https://hermes-agent.nousresearch.com/docs/developer-guide/creating-skills>
 
@@ -272,100 +272,100 @@ The same documentation defines `skills/<skill-name>/SKILL.md` with optional `ref
 
 **Supports:** CanonRail can distribute its self-contained skill and linked contracts through a custom Hermes skill tap.
 
-**Does not decide:** CanonRail's contracts, project adoption, automatic installation, or a need for a Hermes plugin when no tools or hooks are present.
+**Does not decide:** CanonRail's contracts, use by another project, automatic installation, or a need for a Hermes plugin when no tools or hooks are present.
 
-## Foundation audit
+## Project decisions
 
 | CanonRail piece | Evidence | Decision | Limitation |
 |---|---|---|---|
-| Objective: typed project-document guidance | S01, S02, S05, S15 | Retain, narrowed | CanonRail defines a reusable governance method; projects still own their facts and selected document set. |
+| Objective: project-document contracts and validation | S01, S02, S05, S15 | Retain, narrowed | CanonRail defines a harness-agnostic framework; projects still own their facts, selected documents, paths, and approval rules. |
 | Human README and agent instructions are separate | S05, S16, S17 | Retain | The current detailed contract bullets remain CanonRail rules, not requirements of the open format. |
 | Portable Agent Skill | S06, S08, S11, S18 | Retain | Portability covers the format, not identical discovery or execution in every host. |
-| Plugin distribution | S08, S09, S10 | Retain for Codex and deferred Claude packaging | A plugin is a host distribution form, not CanonRail's neutral policy owner. |
+| Plugin distribution | S08, S09, S10 | Retain for Codex and deferred Claude packaging | A plugin is a tool-specific package, not the owner of CanonRail's shared contracts. |
 | Hermes skill distribution | S06, S18 | Retain as a custom skill tap | CanonRail has no Hermes tools or hooks, so a plugin would add an unnecessary install and scan boundary. |
-| Deterministic validation | S07, S13, S16 | Retain | The validator proves configured structure and paths, not semantic truth. |
+| Automated checks | S07, S13, S16 | Retain | The validator proves configured structure and paths, not semantic truth. |
 | mdsmith as the current engine | S13 | Retain as a pinned pilot dependency | Do not present mdsmith as a formal standard or permanent architectural dependency. |
-| Agent-instructions contract | S05, S07, S16 | Retain as a source-informed CanonRail profile | The dedicated entry point, concise persistent guidance, routing, host-defined scope, and deterministic checks are source-backed. Detailed ownership and exclusions are local. |
-| README contract | S02, S05, S17 | Retain as a source-informed CanonRail profile | Human orientation, quick starts, audience needs, and clear public writing are source-backed. Detailed ownership, exclusions, review rules, and headings are local. |
-| Roadmap contract | S01 | Retain as a CanonRail-local profile | `plan` is a standard information-item type; the headings and authority language are explicit local CanonRail rules. |
+| Agent-instructions contract | S05, S07, S16 | Retain as a CanonRail contract with source support | The sources support a dedicated entry point, concise persistent instructions, routing, tool-defined scope, and checks outside prose. CanonRail chooses the detailed inclusions, exclusions, and headings. |
+| README contract | S02, S05, S17 | Retain as a CanonRail contract with source support | The sources support human orientation, quick starts, audience needs, and clear public writing. CanonRail chooses the detailed inclusions, exclusions, review rules, and headings. |
+| Roadmap contract | S01 | Retain as a CanonRail-defined contract | `plan` is a standard information-item type; CanonRail chooses the headings and approval rules. |
 | Execution-plan contract | S14 | Retain as an OpenAI-derived CanonRail profile | Self-contained living context, observable behavior, milestones, exact validation, progress, decisions, and recovery are OpenAI-derived. The headings and authority boundary are local. |
-| PRD contract | S15 | Retain as a CanonRail-local profile | Requirements information is supported; `PRD` and the current headings are explicit local CanonRail choices. |
+| PRD contract | S15 | Retain as a CanonRail-defined contract | The source supports requirements information; CanonRail chooses the term `PRD` and the headings. |
 | Document Topology Contracts | S01, S02, S03, S04, S05, S13 | Narrow to a kind and path-binding pilot | The pilot reuses mdsmith mechanisms. No source requires a combined universal topology field set. |
-| CI as the persisted deterministic gate | S07, S13 | Retain as a CanonRail decision | The sources support enforcement infrastructure; CanonRail selects required CI for reproducible project adoption. |
-| Plain public writing | S02, S17 | Retain | Unslop is an authoring method used during review, not a public CanonRail dependency or formal standard. |
+| CI as the saved-file check | S07, S13 | Retain as a CanonRail decision | The sources support checks outside prose. CanonRail requires CI only when a project adopts automated CanonRail checks, so the same check runs against saved files. |
+| Plain public writing | S02, S17 | Retain | CanonRail chooses its exact writing rules and automated checks; the sources do not define a complete writing-quality gate. |
 
-## Line-level contract reconciliation
+## Rule-by-rule contract review
 
-`Source-backed` means the cited wording supports the concern, not the exact CanonRail sentence.
-`CanonRail-local` means CanonRail deliberately retains the rule without attributing it to an external standard or format.
-`Narrow` and `remove` identify changes from the previous contract text.
+`Supported by source` means the cited wording supports the concern, not the exact CanonRail sentence.
+`CanonRail decision` means CanonRail chose the rule without attributing it to an external standard or format.
+`Narrow` and `remove` describe changes from the previous contract text.
 
 ### Agent instructions contract
 
-| Rule | Disposition | Basis and boundary |
+| Rule | Decision | Source and limit |
 | --- | --- | --- |
-| Definition of agent instructions | Narrow - source-backed with a CanonRail adaptation | S05 and S07 support persistent project context and instructions. S16 supports the non-inferable, mistake-prevention test. |
-| Required contract headings | Retain - CanonRail-local | No cited source requires `Owns`, `Must not absorb`, or `Review`. |
-| Exact setup, build, test, and validation commands | Retain - source-backed | S05, S07, and S16 name build, test, and non-inferable commands as suitable agent guidance. |
-| Project authority, safety boundaries, conventions, and protected paths | Retain - CanonRail-local | S05 and S07 support project conventions and context. CanonRail selects the full category list and the reliability test. |
-| Routing pointers to current owners | Retain - source-backed | S07 explicitly recommends routing guidance when agents read too broadly. CanonRail requires pointers only where an owner must be consulted. |
-| Completion checks within instruction scope | Narrow - source-backed with a CanonRail adaptation | S05 and S07 support checks and local precedence. The contract now defers scope to the active host instead of claiming one directory rule for every host. |
-| Exclude identity, preferences, credentials, and private profile context | Retain - CanonRail-local | OpenAI separates global personal guidance from repository guidance, but the full exclusion list is CanonRail safety policy. |
-| Exclude volatile status and chronology | Retain - source-backed | S16 excludes frequently changing information. CanonRail lists task status, issue history, receipts, and release chronology as examples. |
-| Exclude repository tours and inferable facts | Retain - source-backed | S16 excludes file-by-file descriptions and information available from source. |
-| Exclude copied specialist documents | Retain - source-backed with local examples | S16 recommends linking to detailed documentation. CanonRail names architecture, plans, runbooks, and contribution guides. |
-| Exclude vague instructions | Narrow - source-backed | S16's removal test supports keeping only instructions that prevent a mistake. The revised line drops the broader observable-behavior claim. |
-| Verify commands and paths | Retain - CanonRail-local | Current repository readback is CanonRail's admission rule, not an external format requirement. |
-| Review nested instruction files | Narrow - source-backed | S05 supports nearest-file precedence for AGENTS.md. The revised rule requires checking the active host and does not claim cross-host parity or forbid host-defined overrides. |
-| Remove duplicate explanations and changing status | Retain - source-backed | S16 supports concise persistent guidance and excludes changing information. |
-| Keep routing pointers specific | Retain - source-backed with a CanonRail adaptation | S07 supports routing and S16 warns against ambiguous guidance. CanonRail defines the followability test. |
-| Run declared document and project checks | Retain - source-backed with a CanonRail adaptation | S07 supports deterministic enforcement outside prose. The repository selects the actual checks. |
+| Definition of agent instructions | Narrow - supported by source with a CanonRail change | S05 and S07 support persistent project context and instructions. S16 supports the non-inferable, mistake-prevention test. |
+| Required contract headings | Retain - CanonRail decision | No cited source requires `Include`, `Keep elsewhere`, or `Review`. |
+| Exact setup, build, test, and validation commands | Retain - supported by source | S05, S07, and S16 name build, test, and non-inferable commands as suitable agent guidance. |
+| Project authority, safety boundaries, conventions, and protected paths | Retain - CanonRail decision | S05 and S07 support project conventions and context. CanonRail selects the full category list and the reliability test. |
+| Routing pointers to current owners | Retain - supported by source | S07 explicitly recommends routing guidance when agents read too broadly. CanonRail requires pointers only where an owner must be consulted. |
+| Completion checks within instruction scope | Narrow - supported by source with a CanonRail change | S05 and S07 support checks and local precedence. The contract leaves scope to the current tool instead of claiming one directory rule for every tool. |
+| Exclude identity, preferences, credentials, and private profile context | Retain - CanonRail decision | OpenAI separates global personal guidance from repository guidance, but the full exclusion list is CanonRail safety policy. |
+| Exclude volatile status and chronology | Retain - supported by source | S16 excludes frequently changing information. CanonRail lists task status, issue history, receipts, and release chronology as examples. |
+| Exclude repository tours and inferable facts | Retain - supported by source | S16 excludes file-by-file descriptions and information available from source. |
+| Exclude copied specialist documents | Retain - supported by source with local examples | S16 recommends linking to detailed documentation. CanonRail names architecture, plans, runbooks, and contribution guides. |
+| Exclude vague instructions | Narrow - supported by source | S16's removal test supports keeping only instructions that prevent a mistake. The revised line drops the broader observable-behavior claim. |
+| Verify commands and paths | Retain - CanonRail decision | Current repository readback is CanonRail's admission rule, not an external format requirement. |
+| Review nested instruction files | Narrow - supported by source | S05 supports nearest-file precedence for AGENTS.md. The revised rule requires checking the current tool and does not claim that every tool handles scope the same way. |
+| Remove duplicate explanations and changing status | Retain - supported by source | S16 supports concise persistent guidance and excludes changing information. |
+| Keep routing pointers specific | Retain - supported by source with a CanonRail change | S07 supports routing and S16 warns against ambiguous guidance. CanonRail requires each link to say when an agent should follow it. |
+| Run declared document and project checks | Retain - supported by source with a CanonRail change | S07 supports checks outside prose. The repository selects the actual commands. |
 
 ### README contract
 
-| Rule | Disposition | Basis and boundary |
+| Rule | Decision | Source and limit |
 | --- | --- | --- |
-| Definition of a README | Narrow - source-backed | S05 names project descriptions, quick starts, and contribution guidelines as human README concerns. The previous generic evaluation claim was removed. |
-| Required contract headings | Retain - CanonRail-local | S02 and S05 do not prescribe CanonRail's `Owns`, `Must not absorb`, or `Review` headings. |
-| Project purpose and intended users | Retain - source-backed | S05 supports project descriptions. S02 supports identifying user information needs. |
-| Setup for ordinary use | Narrow - source-backed with a CanonRail adaptation | S05 supports quick starts. CanonRail now limits setup guidance to the primary supported use. |
-| Shortest useful example or first check | Narrow - source-backed with a CanonRail adaptation | S05 supports a quick start but does not require one universal form. The contract now allows an installation step, example, or first check as appropriate. |
-| Public limitations that affect adoption | Retain - CanonRail-local | S02 supports user information needs, but CanonRail selects adoption-relevant limitations as README content. |
-| Links to architecture, contribution, security, and support owners | Narrow - CanonRail-local | S05 supports contribution guidance. CanonRail broadens the owner to deeper documentation and requires specialist links only when they exist. |
-| Exclude full architecture and implementation history | Retain - CanonRail-local | This keeps the human entry point bounded. No cited source defines the exact exclusion. |
-| Exclude task state, private review language, and agent workflow | Retain - source-informed CanonRail policy | S05 separates human and agent entry points. S16 supports excluding volatile information. The detailed list is local. |
-| Exclude internal paths, accounts, credentials, and unpublished evidence | Retain - CanonRail-local | This is a public-information and safety boundary, not an external README standard. |
-| Exclude duplicated linked explanations | Retain - CanonRail-local | S17 supports clear, useful writing. CanonRail selects single ownership instead of repetition. |
-| Exclude unproved quality and readiness claims | Retain - CanonRail-local | CanonRail requires current proof for strong public claims. The cited sources do not define this list. |
-| Read as a new user | Retain - source-backed with a CanonRail method | S02 supports designing around user information needs. CanonRail chooses the no-history review perspective. |
-| Verify commands, links, versions, and claims | Retain - CanonRail-local | Current readback is CanonRail's admission rule. |
-| Put the common path first | Retain - CanonRail-local | S02 supports audience-aware presentation. CanonRail selects common-path-first ordering. |
-| Remove filler, promotion, and generic prose | Retain - source-backed with a CanonRail adaptation | S17 supports clear, direct, useful writing. CanonRail names the concrete rejection cases. |
-| First example exercises a supported path | Narrow - CanonRail-local | The new rule verifies every command or runnable example without requiring every README to contain one. |
+| Definition of a README | Narrow - supported by source | S05 names project descriptions, quick starts, and contribution guidelines as human README concerns. The previous generic evaluation claim was removed. |
+| Required contract headings | Retain - CanonRail decision | S02 and S05 do not prescribe CanonRail's `Include`, `Keep elsewhere`, or `Review` headings. |
+| Project purpose and intended users | Retain - supported by source | S05 supports project descriptions. S02 supports identifying user information needs. |
+| Setup for ordinary use | Narrow - supported by source with a CanonRail change | S05 supports quick starts. CanonRail limits setup instructions to the main supported use. |
+| Shortest useful example or first check | Narrow - supported by source with a CanonRail change | S05 supports a quick start but does not require one universal form. The contract allows an installation step, example, or first check as appropriate. |
+| Public limitations that affect adoption | Retain - CanonRail decision | S02 supports user information needs, but CanonRail selects adoption-relevant limitations as README content. |
+| Links to architecture, contribution, security, and support owners | Narrow - CanonRail decision | S05 supports contribution guidance. CanonRail broadens the owner to deeper documentation and requires specialist links only when they exist. |
+| Exclude full architecture and implementation history | Retain - CanonRail decision | This keeps the human entry point bounded. No cited source defines the exact exclusion. |
+| Exclude task state, private review language, and agent workflow | Retain - supported by sources with CanonRail details | S05 separates human and agent entry points. S16 supports excluding volatile information. The detailed list is local. |
+| Exclude internal paths, accounts, credentials, and unpublished evidence | Retain - CanonRail decision | This is a public-information and safety boundary, not an external README standard. |
+| Exclude duplicated linked explanations | Retain - CanonRail decision | S17 supports clear, useful writing. CanonRail selects single ownership instead of repetition. |
+| Exclude unproved quality and readiness claims | Retain - CanonRail decision | CanonRail requires current proof for strong public claims. The cited sources do not define this list. |
+| Read as a new user | Retain - supported by source with a CanonRail method | S02 supports designing around user information needs. CanonRail chooses the no-history review perspective. |
+| Verify commands, links, versions, and claims | Retain - CanonRail decision | Current readback is CanonRail's admission rule. |
+| Put the common path first | Retain - CanonRail decision | S02 supports audience-aware presentation. CanonRail selects common-path-first ordering. |
+| Remove filler, promotion, and generic prose | Retain - supported by source with a CanonRail change | S17 supports clear, direct, useful writing. CanonRail names the specific wording it rejects. |
+| First example exercises a supported path | Narrow - CanonRail decision | The new rule verifies every command or runnable example without requiring every README to contain one. |
 
 ### Execution plan contract
 
-| Rule | Disposition | Basis and boundary |
+| Rule | Decision | Source and limit |
 | --- | --- | --- |
-| Definition of an execution plan | Retain - source-backed | S14 requires a self-contained plan that a novice can follow to working behavior. CanonRail narrows the plan to one bounded result. |
-| Required contract headings | Retain - CanonRail-local | S14 provides one customizable profile and does not require CanonRail's five headings. |
-| Plan presence does not authorize execution | Add - CanonRail-local | S14 describes an implementation method, not project authority. CanonRail makes the authority boundary explicit. |
-| One goal, current context, and exclusions | Retain - source-backed with a CanonRail adaptation | S14 supports purpose and complete current context. One bounded goal and explicit exclusions are CanonRail choices. |
-| Affected paths, ordered work, and dependencies | Retain - source-backed | S14 requires concrete file locations, a work sequence, and milestone dependencies. |
-| Observable acceptance | Retain - source-backed | S14 requires demonstrably working behavior and observable inputs and outputs. |
-| Exact validation commands and evidence | Retain - source-backed | S14 requires exact commands, working directory, and expected transcripts. |
-| Recovery guidance | Retain - source-backed | S14 requires safe repetition, retry, or rollback guidance. |
-| Current progress, discoveries, decisions, and outcomes | Add - source-backed | S14 requires a living plan with these records kept current. |
-| Exclude roadmap authority and unrelated future work | Retain - CanonRail-local | S14 does not grant roadmap authority. CanonRail keeps one execution result separate from project-wide sequencing. |
-| Exclude assumptions presented as architecture | Retain - source-backed with a CanonRail adaptation | S14 requires assumptions to be repeated and decisions recorded. CanonRail forbids presenting unresolved assumptions as settled. |
-| Exclude placeholder commands, paths, outputs, and counts | Retain - source-backed | S14 requires concrete paths, exact commands, and expected evidence. |
-| Exclude irrelevant private conversation history | Retain - CanonRail-local | S14 requires a self-contained plan with no prior context. CanonRail excludes conversation history that does not change implementation. |
+| Definition of an execution plan | Retain - supported by source | S14 requires a self-contained plan that a novice can follow to working behavior. CanonRail narrows the plan to one bounded result. |
+| Required contract headings | Retain - CanonRail decision | S14 provides one customizable profile and does not require CanonRail's three contract headings. |
+| Plan presence does not authorize execution | Add - CanonRail decision | S14 describes an implementation method, not project authority. CanonRail makes the authority boundary explicit. |
+| One goal, current context, and exclusions | Retain - supported by source with a CanonRail change | S14 supports purpose and complete current context. One defined goal and explicit exclusions are CanonRail choices. |
+| Affected paths, ordered work, and dependencies | Retain - supported by source | S14 requires concrete file locations, a work sequence, and milestone dependencies. |
+| Observable acceptance | Retain - supported by source | S14 requires demonstrably working behavior and observable inputs and outputs. |
+| Exact validation commands and evidence | Retain - supported by source | S14 requires exact commands, working directory, and expected transcripts. |
+| Recovery guidance | Retain - supported by source | S14 requires safe repetition, retry, or rollback guidance. |
+| Current progress, discoveries, decisions, and outcomes | Add - supported by source | S14 requires a living plan with these records kept current. |
+| Exclude roadmap authority and unrelated future work | Retain - CanonRail decision | S14 does not grant roadmap authority. CanonRail keeps one execution result separate from project-wide sequencing. |
+| Exclude assumptions presented as architecture | Retain - supported by source with a CanonRail change | S14 requires assumptions to be repeated and decisions recorded. CanonRail forbids presenting unresolved assumptions as settled. |
+| Exclude placeholder commands, paths, outputs, and counts | Retain - supported by source | S14 requires concrete paths, exact commands, and expected evidence. |
+| Exclude irrelevant private conversation history | Retain - CanonRail decision | S14 requires a self-contained plan with no prior context. CanonRail excludes conversation history that does not change implementation. |
 | Exclude a progress diary | Remove and replace | S14 requires current progress, discoveries, decisions, and outcomes. The replacement excludes only chronology that changes none of those records or recovery. |
-| Confirm paths and commands | Retain - source-backed | S14 requires current concrete paths and commands. CanonRail adds repository readback. |
-| Independently verifiable milestones | Retain - source-backed | S14 states this requirement directly. |
-| Distinguish requirements from suggestions | Retain - CanonRail-local | This protects implementation authority. S14 does not define CanonRail's wording test. |
-| Preserve unresolved choices | Retain - source-informed CanonRail policy | S14 requires explicit assumptions and decision records. CanonRail forbids guessing unresolved choices. |
-| Fresh reader can resume from plan and repository | Retain - source-backed | S14 requires self-contained novice guidance and a living current state. |
+| Confirm paths and commands | Retain - supported by source | S14 requires current concrete paths and commands. CanonRail adds repository readback. |
+| Independently verifiable milestones | Retain - supported by source | S14 states this requirement directly. |
+| Distinguish requirements from suggestions | Retain - CanonRail decision | This protects implementation authority. S14 does not define CanonRail's wording test. |
+| Preserve unresolved choices | Retain - supported by sources with CanonRail details | S14 requires explicit assumptions and decision records. CanonRail forbids guessing unresolved choices. |
+| Fresh reader can resume from plan and repository | Retain - supported by source | S14 requires self-contained novice guidance and a living current state. |
 
 ## Selected topology scope
 
@@ -374,16 +374,16 @@ The approved pilot reuses the current mdsmith configuration and proves only:
 | Concern | Classification | Pilot decision |
 | --- | --- | --- |
 | `kind` | S01, S03, and S13 support document or model kinds; S13 supplies the current mechanism. | Resolve the expected primary kind for the selected CanonRail paths. |
-| project-selected path or glob | S13 directly supports `kind-assignment` globs. | Keep `.mdsmith.yml` as the physical binding owner. |
-| purpose | S01 supports purpose as a document concern. | Keep it in each semantic contract rather than duplicate it as machine metadata. |
-| audience or information need | S02 supports this concern for software user information. | Keep it in semantic review; do not promote it into a universal field. |
-| relationships | S03 and S04 provide architecture and DITA-specific precedent. | Defer until a CanonRail case defines identity, relation meaning, and an adjacent-invalid example. |
+| project-selected path or glob | S13 directly supports `kind-assignment` globs. | Keep path mappings in `.mdsmith.yml`. |
+| purpose | S01 supports purpose as a document concern. | Keep purpose in each document contract rather than repeat it as machine metadata. |
+| audience or information need | S02 supports this concern for software user information. | Keep it in content review; do not promote it into a universal field. |
+| relationships | S03 and S04 provide architecture and DITA-specific precedent. | Defer until a CanonRail case defines identity, relation meaning, and one failing example that differs by that rule. |
 | logical order | S04 provides DITA-specific ordered relationships. | Defer until a CanonRail case defines cardinality and invalid order. |
-| nested instruction scope | S05 supports nearest-file precedence for the AGENTS.md open format. | Defer cross-host enforcement and do not claim universal host parity. |
+| nested instruction scope | S05 supports nearest-file precedence for the AGENTS.md open format. | Defer rules across tools and do not claim that every tool behaves the same way. |
 
 CanonRail's classification is a local decision. The sources do not require these concerns to become one universal topology schema.
 
-The pilot creates no topology artifact. It keeps semantic contracts separate from project-selected path binding and adds no parser, runtime, hook, or dependency.
+The pilot creates no topology file. It keeps document contracts separate from project-selected path mappings and adds no parser, runtime, hook, or dependency.
 
 ## Unsupported or deferred
 
@@ -395,7 +395,7 @@ The following items are not selected for implementation:
 - a claim of ISO, IEEE, OASIS, or Agent Skills conformance for CanonRail as a whole;
 - semantic truth or architecture approval inferred from a passing schema;
 - identical behavior across Hermes, Claude Code, Codex, or another host;
-- automatic host hooks before host-specific contracts and consent are tested;
+- automatic tool hooks before tool-specific behavior and consent are tested;
 - an MCP server, daemon, custom Markdown parser, or custom validation engine;
 - public marketplace publication;
 - `owner`, `authority`, `lifecycle`, or `exceptions` as universal topology fields until an exact source or explicit CanonRail decision owns each field;
@@ -411,8 +411,8 @@ A CanonRail piece can move from proposal to implementation only when its plan en
 2. exact source wording;
 3. the claim that wording supports;
 4. what the source does not decide;
-5. the smallest CanonRail adaptation;
-6. a valid fixture and adjacent-invalid fixture;
+5. the smallest CanonRail change;
+6. one passing example and one example that differs only in the rule that should fail;
 7. a deterministic or observable acceptance check.
 
 If the chain is incomplete, the piece remains deferred or is removed.

@@ -1,50 +1,49 @@
 # CanonRail
 
-CanonRail applies versioned contracts to project documents across AI coding tools and CI.
-It keeps each document focused on its audience and authority without tying the rules to one agent.
+CanonRail is a documentation framework that is not tied to one agent harness.
+It defines and validates contracts for project documents.
+Projects keep control of their own facts, decisions, paths, and approval rules.
 
 ## What it does
 
-- Classifies documents such as `AGENTS.md`, README, roadmaps, execution plans, and PRDs.
-- Gives agents concise guidance for each document type.
-- Uses deterministic checks for structure, links, paths, and declared fields.
-- Leaves project-specific facts and exceptions in the project that owns them.
+- Defines one contract for each supported document type.
+- Makes the same contracts available to compatible agent tools through one Agent Skill.
+- Checks required sections and file-to-document mappings when a project configures them.
+- Uses repository checks and CI to validate saved files.
 
 ## How it works
 
-CanonRail combines three parts:
+1. Each contract states what belongs in a document, what belongs elsewhere, and what to review.
+2. The CanonRail Agent Skill lets compatible tools apply those contracts without changing them.
+3. Each project chooses its own files, path mappings, exceptions, and checks.
+4. People, agent tools, and CI can run the same repository checks against saved files.
 
-1. Document contracts describe what each file owns and what belongs elsewhere.
-2. A portable Agent Skill guides authoring and review.
-3. [mdsmith](https://mdsmith.dev/) validates saved Markdown when a project adopts the supplied configuration pattern.
-
-Hermes installs the portable skill directly.
-Codex packages the same skill through its plugin manifest.
-The deferred Claude Code manifest stays disabled by default.
-Project sources and configured repository checks remain authoritative.
+This repository uses [mdsmith](https://mdsmith.dev/) for its current structure and path checks.
+CanonRail does not install mdsmith or add configuration to another project unless that setup work is explicitly selected.
 
 ## Current scope
 
-This foundation defines contracts for:
+CanonRail includes contracts for:
 
-- agent instructions;
-- human-facing README files;
-- project roadmaps;
-- executable implementation plans;
-- product requirements documents.
+- [agent instructions](skills/canonrail/references/contracts/agent-instructions.md);
+- [human-facing README files](skills/canonrail/references/contracts/readme.md);
+- [project roadmaps](skills/canonrail/references/contracts/roadmap.md);
+- [execution plans](skills/canonrail/references/contracts/execplan.md);
+- [product requirements documents](skills/canonrail/references/contracts/prd.md).
 
-The contracts are deliberately small. New document types can be added without changing the validator or host adapters.
+The public install commands below have been tested with Hermes Agent and Codex CLI.
+Claude Code is not supported yet. Its manifest is disabled while runtime testing remains deferred.
+CanonRail has no stable release. Installations from `main` may change before `v0.1.0` is released.
 
-Hermes and Codex have completed local host validation.
-The Claude Code adapter is disabled by default, and its runtime validation remains deferred.
+Project information:
 
-- [Project plan](PLAN.md)
-- [Foundation source audit](docs/research/foundation-sources.md)
+- [Roadmap](PLAN.md)
+- [Sources behind the document contracts](docs/research/foundation-sources.md)
 - [Changelog](CHANGELOG.md)
 
 ## Install
 
-Use a current Hermes Agent or Codex CLI release with skill support.
+These commands require Agent Skill support in Hermes Agent or Codex CLI.
 
 ### Hermes Agent
 
@@ -68,24 +67,18 @@ Start a new Codex session after installing the plugin.
 
 ## Use
 
-Run CanonRail from the repository that owns the document. For example:
+People can use the linked contracts directly.
+In a compatible agent tool, run the CanonRail skill from the repository that contains the document. For example:
 
 ```text
 Use CanonRail to review README.md as a human-facing README.
 ```
 
-No project configuration is required for semantic review.
-If the project declares a document-kind command or document check, CanonRail uses it.
-Otherwise, CanonRail states that deterministic validation is not configured and continues with the semantic contract.
+You do not need CanonRail configuration for a document review.
+If the project provides a document check, CanonRail runs it.
+If not, CanonRail states that no automated document check is configured and reviews the file against the matching contract.
 
-To verify this repository:
-
-```bash
-python -m unittest discover -s tests -v
-npx --yes @mdsmith/cli@0.54.0 check .
-```
-
-CanonRail is at an early foundation stage. It has no stable release yet.
+For repository checks, see [Contributing](CONTRIBUTING.md).
 
 ## License
 

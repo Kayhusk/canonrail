@@ -1,33 +1,30 @@
 # Agent instructions contract
 
-Agent instruction files tell coding agents how to work in a project.
-CanonRail keeps broad rules when source cannot reveal them and removing them could cause a specific mistake.
+Agent instruction files give coding agents project rules they cannot infer reliably from the repository.
+Keep only rules that prevent a concrete mistake.
 
-The sources support a dedicated agent entry point, short persistent rules, routing, host-defined precedence, and checks outside prose.
+CanonRail chose the sections and review rules below.
+Each coding tool still controls how it finds and prioritizes instruction files.
 
-CanonRail defines the details below as local policy. This includes the owners, exclusions, review rules, and required headings.
-Each host still owns its scope and precedence.
-The CanonRail foundation source audit records the line-level disposition.
+## Include
 
-## Owns
+- Setup, build, test, and validation commands that differ from common defaults.
+- Who can approve or authorize work, safety limits, conventions, and protected paths that an agent cannot reliably infer.
+- Short links to project documents an agent must read for specific work.
+- Completion checks that apply throughout the instruction file's scope in the current tool.
 
-- Exact setup, build, test, and validation commands that differ from common defaults.
-- Project-specific authority, safety boundaries, conventions, and protected paths that an agent cannot reliably infer.
-- Short routing pointers to the current owners an agent must consult.
-- Completion checks that apply broadly within the instruction file's host-defined scope.
+## Keep elsewhere
 
-## Must not absorb
-
-- Agent identity, user preferences, credentials, or private profile context.
-- Volatile task status, issue history, test receipts, or release chronology.
-- File-by-file repository tours or facts visible in manifests and source.
-- Full copies of architecture, plans, runbooks, or contribution guides.
-- Vague or self-evident instructions that would not prevent a specific mistake.
+- Agent identity, user preferences, credentials, and private profile details.
+- Changing task status, issue history, test records, and release history.
+- File-by-file repository tours and facts already clear in manifests or source code.
+- Copies of architecture documents, plans, runbooks, and contribution guides.
+- Vague or self-evident advice that would not prevent a specific mistake.
 
 ## Review
 
 - Verify every command and path against the current repository.
-- If the active host supports nested instruction files, verify effective scope and precedence against that host's current rules.
-- Remove duplicate explanations and changing status.
-- Keep each pointer specific enough that an agent can tell when to follow it.
-- Run the repository's declared document and project checks.
+- If the current tool supports nested instruction files, verify which file applies at each changed path.
+- Remove repeated explanations and changing status.
+- Make each link specific enough that an agent knows when to follow it.
+- Run the repository's document check and the project checks required for the change.

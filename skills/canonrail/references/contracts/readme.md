@@ -1,34 +1,30 @@
 # README contract
 
-A README gives people the project's description, quick start, and contribution entry point.
+A README tells people what a project does and how to get started.
 
-The open format keeps human README files separate from agent guidance.
-Other source guidance supports audience needs and clear, useful public information.
-
-CanonRail defines the details below as local policy. This includes the owners, exclusions, review rules, and required headings.
+CanonRail chose the sections and review rules below for this contract.
 They are not a universal README standard.
-The CanonRail foundation source audit records the line-level disposition.
 
-## Owns
+## Include
 
 - The project's purpose and intended users.
-- Setup needed for the primary supported use.
-- A short quick start, using an installation step, example, or first check as appropriate.
-- Current public limitations that affect adoption.
-- Links to deeper documentation, contribution, security, and support owners when they exist.
+- Setup for the main supported use.
+- A short installation step, example, or first check that gets the reader started.
+- Current public limits that could affect adoption.
+- Links to detailed documentation, contribution guidance, security information, and support when those resources exist.
 
-## Must not absorb
+## Keep elsewhere
 
-- Full architecture specifications or implementation history.
-- Active task state, private review language, or agent workflow details.
-- Internal paths, account names, credentials, or unpublished evidence.
-- Repeated explanations already owned by linked documentation.
-- Claims such as complete, secure, fast, or production-ready without current proof.
+- Full architecture specifications and implementation history.
+- Current task status, private review language, and agent workflow details.
+- Internal paths, account names, credentials, and unpublished evidence.
+- Explanations already maintained in linked documentation.
+- Claims such as complete, secure, fast, or production-ready without current evidence.
 
 ## Review
 
 - Read the file as a new user with no repository history.
 - Verify every command, link, version, and public claim.
-- Put the common path first and move specialist detail to its owner.
-- Remove filler, promotional language, and explanations that fit any project.
-- Confirm that each command or runnable example exercises a current supported path.
+- Put the common path first and link to specialist details.
+- Remove filler, promotion, and wording that could describe any project.
+- Confirm that every command or runnable example uses a supported path.

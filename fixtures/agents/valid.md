@@ -10,10 +10,10 @@ This repository provides a sample service.
 
 ## Working rules
 
-- Run the focused checks after changes.
+- Run the verification command below after changes.
 
 ## Verification
 
 ```bash
-python -m unittest
+python -m unittest discover -s tests -v
 ```

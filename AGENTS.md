@@ -2,24 +2,26 @@
 
 ## Purpose
 
-CanonRail is an agent-portable document governance framework. The policy pack owns document contracts. Host adapters only expose the same portable skill to their agent runtime.
+CanonRail is a documentation framework that is not tied to one agent harness.
+It defines and validates contracts for project documents.
+The Agent Skill and package manifests expose the same contracts without redefining them.
 
 ## Project sources
 
-- `README.md` is the human-facing introduction and usage guide.
-- `skills/canonrail/references/contracts/` defines the semantic boundary for each document type.
-- `.mdsmith.yml` maps paths to document kinds and deterministic schemas.
-- `skills/canonrail/SKILL.md` defines the portable authoring and review workflow.
-- Codex and Claude manifests plus the Hermes skill tap expose the portable skill without owning its policy.
+- `README.md` explains the project and ordinary use.
+- `skills/canonrail/references/contracts/` defines each supported document contract.
+- `.mdsmith.yml` maps file paths to document types and required sections.
+- `skills/canonrail/SKILL.md` defines how compatible agent tools apply the contracts.
+- Package manifests expose the Agent Skill without changing the contracts.
 
 ## Working rules
 
-- Keep the neutral policy free of product, client, profile, and machine-specific facts.
-- Put project-specific truth in the project that owns it.
-- Add a document kind only with a contract, path mapping, valid fixture, invalid fixture, and focused test.
-- Prefer configuring mdsmith over writing another parser or validator.
-- Keep user-facing writing plain, direct, and free of private process language.
-- Do not add hooks, daemons, MCP servers, generators, or publishing automation without a demonstrated requirement.
+- Keep shared contracts free of product, client, profile, and machine-specific facts.
+- Put project-specific facts in the project that maintains them.
+- Add a document type only with a contract, path mapping, passing example, failing example, and focused test.
+- Configure mdsmith instead of writing another Markdown parser or checker.
+- Keep public writing plain, direct, and free of private process terms.
+- Do not add hooks, daemons, MCP servers, generators, or publishing automation without a demonstrated need.
 
 ## Verification
 

@@ -2,7 +2,7 @@
 
 ## Problem
 
-Readers cannot tell which document owns current status.
+Readers find the same current status in several documents.
 
 ## Users
 
@@ -10,7 +10,7 @@ Maintainers and coding agents use the affected documents.
 
 ## Outcomes
 
-Each status statement has one current owner.
+Each status statement appears in one current document.
 
 ## Scope
 
@@ -18,4 +18,4 @@ Classify and validate the named document set.
 
 ## Acceptance
 
-A duplicate current-status statement fails the project check.
+The project check rejects current status copied into a second document.
