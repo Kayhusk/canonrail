@@ -1,0 +1,14 @@
+{
+  "name": "canonrail",
+  "version": "0.1.0",
+  "description": "Apply versioned document contracts across projects and AI coding tools.",
+  "author": {
+    "name": "Edward Bowie",
+    "url": "https://github.com/Kayhusk"
+  },
+  "homepage": "https://github.com/Kayhusk/canonrail",
+  "repository": "https://github.com/Kayhusk/canonrail",
+  "license": "MIT",
+  "keywords": ["agents", "documentation", "governance", "markdown"],
+  "skills": "./skills/"
+}

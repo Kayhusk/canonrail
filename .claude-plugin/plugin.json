@@ -1,0 +1,9 @@
+{
+  "name": "canonrail",
+  "version": "0.1.0",
+  "description": "Apply versioned document contracts across projects and AI coding tools.",
+  "author": {
+    "name": "Edward Bowie",
+    "url": "https://github.com/Kayhusk"
+  }
+}

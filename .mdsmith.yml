@@ -1,0 +1,65 @@
+rules:
+  line-length:
+    max: 200
+
+overrides:
+  - glob: ["skills/**/*.md"]
+    rules:
+      first-line-heading: false
+
+kinds:
+  agents:
+    schema:
+      closed: false
+      sections:
+        - heading: "Purpose"
+        - heading: "Project sources"
+        - heading: "Working rules"
+        - heading: "Verification"
+  readme:
+    schema:
+      closed: false
+      sections:
+        - heading: "What it does"
+        - heading: "How it works"
+        - heading: "Current scope"
+        - heading: "Use"
+        - heading: "License"
+  roadmap:
+    schema:
+      closed: false
+      sections:
+        - heading: "Status"
+        - heading: "Current phase"
+        - heading: "Next decision"
+        - heading: "Guardrails"
+  execplan:
+    schema:
+      closed: false
+      sections:
+        - heading: "Goal"
+        - heading: "Context"
+        - heading: "Plan"
+        - heading: "Validation"
+        - heading: "Recovery"
+  prd:
+    schema:
+      closed: false
+      sections:
+        - heading: "Problem"
+        - heading: "Users"
+        - heading: "Outcomes"
+        - heading: "Scope"
+        - heading: "Acceptance"
+
+kind-assignment:
+  - glob: ["**/AGENTS.md"]
+    kinds: [agents]
+  - glob: ["**/README.md"]
+    kinds: [readme]
+  - glob: ["PLAN.md"]
+    kinds: [roadmap]
+  - glob: [".canonrail/plans/*.md"]
+    kinds: [execplan]
+  - glob: ["docs/prd/**/*.md"]
+    kinds: [prd]
