@@ -21,11 +21,16 @@ EXPECTED_FILES = (
     "CHANGELOG.md",
     "PLAN.md",
     "docs/research/foundation-sources.md",
+    "docs/architecture.md",
+    "docs/architecture.html",
+    "docs/architecture.png",
     "AGENTS.md",
     "CONTRIBUTING.md",
+    "SECURITY.md",
     "LICENSE",
     "VERSION",
     ".gitignore",
+    "assets/logo-mark.svg",
     ".mdsmith.yml",
     ".claude-plugin/plugin.json",
     ".codex-plugin/plugin.json",
@@ -46,8 +51,10 @@ PUBLIC_PROSE_FILES = (
     "AGENTS.md",
     "CHANGELOG.md",
     "CONTRIBUTING.md",
+    "SECURITY.md",
     "PLAN.md",
     "README.md",
+    "docs/architecture.md",
     ".agents/plugins/marketplace.json",
     ".claude-plugin/plugin.json",
     ".codex-plugin/plugin.json",
@@ -192,6 +199,11 @@ class CanonRailTests(unittest.TestCase):
             ],
         )
         self.assertNotIn("### Claude Code", readme)
+
+    def test_readme_links_architecture_and_names_the_author(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn("[Architecture](docs/architecture.md)", readme)
+        self.assertIn("[Edward Anthony Escudero Bowie](https://portfolio.kydek.com)", readme)
 
     def test_public_positioning_separates_contracts_from_configured_checks(self):
         statements = (

@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CanonRail logical architecture</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface-muted: #f5f5f6;
+      --border: rgba(17, 18, 22, 0.10);
+      --border-strong: rgba(17, 18, 22, 0.22);
+      --text: #0c0d10;
+      --text-muted: #55596a;
+      --text-soft: #8d93a1;
+      --accent: #111216;
+      --rail: #ff6e14;
+      --radius: 14px;
+      --shadow: 0 1px 2px rgba(17, 18, 22, 0.04), 0 8px 24px rgba(17, 18, 22, 0.06);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-width: 1440px; background: var(--bg); }
+
+    body {
+      padding: 46px 64px 34px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main { width: 1312px; margin: 0 auto; }
+
+    .kicker {
+      margin: 0 0 10px;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 52px;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .lede {
+      max-width: 980px;
+      margin: 16px 0 0;
+      color: var(--text-muted);
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .diagram {
+      display: grid;
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    .tier {
+      display: grid;
+      grid-template-columns: 138px 1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .tier-name {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      border-radius: var(--radius);
+      background: var(--surface-muted);
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      line-height: 1.4;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .cells {
+      display: grid;
+      align-items: stretch;
+    }
+
+    .access { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+    .cell {
+      position: relative;
+      min-height: 104px;
+      padding: 17px 16px 15px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .access .cell { background: var(--surface-muted); box-shadow: none; }
+    .canonrail-owned { border-top: 3px solid var(--rail); }
+
+    .step {
+      display: inline-flex;
+      width: 26px;
+      height: 26px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 11px;
+      border-radius: 999px;
+      background: var(--surface-muted);
+      color: var(--rail);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .cell h2, .contract-group h2 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+    }
+
+    .cell p, .contract-group p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.93em;
+    }
+
+    .package-flow {
+      display: grid;
+      grid-template-columns: 300px 52px 1fr;
+      align-items: stretch;
+    }
+
+    .contract-group {
+      min-height: 132px;
+      padding: 17px 16px 15px;
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--rail);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .contract-list {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 9px;
+      margin-top: 13px;
+    }
+
+    .contract {
+      display: flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-muted);
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 650;
+      line-height: 1.25;
+      text-align: center;
+    }
+
+    .connector {
+      position: relative;
+      min-height: 1px;
+    }
+
+    .connector::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 7px;
+      width: 35px;
+      height: 1px;
+      background: var(--border-strong);
+    }
+
+    .connector::before {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      top: calc(50% - 4px);
+      right: 5px;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      border-left: 6px solid var(--text-soft);
+    }
+
+    .project-flow {
+      display: grid;
+      grid-template-columns: 1fr 52px 1fr;
+      align-items: stretch;
+    }
+
+    .stack {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .stack .cell {
+      min-height: 76px;
+      padding: 13px 16px 12px;
+      background: var(--surface-muted);
+      box-shadow: none;
+    }
+
+    .command {
+      display: block;
+      margin-top: 3px;
+      color: var(--text-muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .note {
+      grid-column: 2;
+      margin: -7px 0 0;
+      color: var(--text-soft);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .legend {
+      display: flex;
+      gap: 28px;
+      margin: 24px 0 0 160px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .legend span { display: inline-flex; align-items: center; gap: 8px; }
+    .legend b { color: var(--text); font-weight: 650; }
+
+    .line {
+      display: inline-block;
+      width: 24px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .line.orange { background: var(--rail); }
+
+    .swatch {
+      display: inline-block;
+      width: 18px;
+      height: 14px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface-muted);
+    }
+
+    footer {
+      margin: 20px 0 0 160px;
+      color: var(--text-soft);
+      font-size: 10px;
+      letter-spacing: 0.02em;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="kicker">Logical architecture | One project</p>
+    <h1>Shared contracts, project-owned truth</h1>
+    <p class="lede">People, Hermes Agent, and Codex CLI reach one CanonRail package. The project keeps its facts, paths, checks, and approval rules.</p>
+  </header>
+
+  <section class="diagram" aria-label="CanonRail logical architecture">
+    <div class="tier">
+      <div class="tier-name">Current access</div>
+      <div class="cells access">
+        <article class="cell">
+          <h2>Direct use</h2>
+          <p>People open and apply the document contracts directly.</p>
+        </article>
+        <article class="cell">
+          <h2>Hermes Agent</h2>
+          <p>A skill tap installs the CanonRail Agent Skill.</p>
+        </article>
+        <article class="cell">
+          <h2>Codex CLI</h2>
+          <p>A plugin marketplace installs the same Agent Skill.</p>
+        </article>
+      </div>
+      <p class="note">People may open the contracts directly. Hermes Agent and Codex CLI load the one Agent Skill below.</p>
+    </div>
+
+    <div class="tier">
+      <div class="tier-name">CanonRail package</div>
+      <div class="package-flow">
+        <article class="cell canonrail-owned">
+          <span class="step">01</span>
+          <h2><code>skills/canonrail/SKILL.md</code></h2>
+          <p>Finds the project root, identifies the document type, and opens one matching contract.</p>
+        </article>
+        <div class="connector" aria-hidden="true"></div>
+        <section class="contract-group">
+          <h2>Five linked document contracts</h2>
+          <p>One contract set is shared by every supported access path.</p>
+          <div class="contract-list">
+            <div class="contract">Agent instructions</div>
+            <div class="contract">README</div>
+            <div class="contract">Roadmap</div>
+            <div class="contract">Execution plan</div>
+            <div class="contract">Product requirements</div>
+          </div>
+        </section>
+      </div>
+      <p class="note">The tool packages expose this same skill. They do not maintain separate contract copies.</p>
+    </div>
+
+    <div class="tier">
+      <div class="tier-name">Project-owned</div>
+      <div class="project-flow">
+        <div class="stack">
+          <article class="cell">
+            <h2>Saved project files</h2>
+            <p>Target documents plus current names, facts, commands, status, decisions, and approval rules.</p>
+          </article>
+          <article class="cell">
+            <h2><code>.mdsmith.yml</code></h2>
+            <p>The project maps files to document types and declares required sections.</p>
+          </article>
+        </div>
+        <div class="connector" aria-hidden="true"></div>
+        <div class="stack">
+          <article class="cell">
+            <h2>Local verification</h2>
+            <span class="command">python -m unittest discover -s tests -v</span>
+            <span class="command">npx --yes @mdsmith/cli@0.54.0 check .</span>
+          </article>
+          <article class="cell">
+            <h2>GitHub Actions CI</h2>
+            <p><code>.github/workflows/ci.yml</code> runs the same two commands on push and pull request.</p>
+          </article>
+        </div>
+      </div>
+      <p class="note">Saved files and project configuration feed both check paths. Checks prove configured structure and mappings, not truth, usefulness, completeness, or approval.</p>
+    </div>
+  </section>
+
+  <aside class="legend" aria-label="Diagram legend">
+    <span><i class="line"></i><b>Black</b> current relationship</span>
+    <span><i class="line orange"></i><b>Orange</b> CanonRail-owned package</span>
+    <span><i class="swatch"></i><b>Gray</b> project-owned source or check</span>
+  </aside>
+
+  <footer>CanonRail 0.1.0 | Logical architecture | One project</footer>
+</main>
+</body>
+</html>

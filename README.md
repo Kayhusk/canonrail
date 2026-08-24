@@ -39,9 +39,11 @@ CanonRail has no stable release. Installations from `main` may change before `v0
 
 Project information:
 
+- [Architecture](docs/architecture.md)
 - [Roadmap](PLAN.md)
 - [Sources behind the document contracts](docs/research/foundation-sources.md)
 - [Changelog](CHANGELOG.md)
+- [Security policy](SECURITY.md)
 
 ## Install
 
@@ -81,6 +83,10 @@ If the project provides a document check, CanonRail runs it.
 If not, CanonRail states that no automated document check is configured and reviews the file against the matching contract.
 
 For repository checks, see [Contributing](CONTRIBUTING.md).
+
+## Author
+
+Created and maintained by [Edward Anthony Escudero Bowie](https://portfolio.kydek.com) ([GitHub](https://github.com/Kayhusk)).
 
 ## License
 

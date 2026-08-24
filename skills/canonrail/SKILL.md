@@ -2,7 +2,7 @@
 name: canonrail
 description: Write and review agent docs, READMEs, plans, and PRDs.
 version: 0.1.0
-author: Edward Bowie, Hermes Agent
+author: Edward Anthony Escudero Bowie
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
