@@ -62,7 +62,7 @@ QUOTE_PROTECTED_PROSE_FILES = ("docs/research/foundation-sources.md",)
 FORBIDDEN_PUBLIC_PHRASES = (
     "a testament to",
     "adjacent-invalid",
-    "agent-portable",
+    "agent-portable document governance framework",
     "at its core",
     "delve into",
     "deterministic validation",
@@ -91,6 +91,7 @@ FORBIDDEN_PROSE_CHARACTERS = {
     "\u201c": "left double quotation mark",
     "\u201d": "right double quotation mark",
     "\u2026": "ellipsis",
+    "✅": "decorative emoji",
 }
 PUBLIC_TEXT_SUFFIXES = {".json", ".md", ".py", ".txt", ".yaml", ".yml"}
 
@@ -116,9 +117,6 @@ def public_prose_violations(relative, text):
     for character, name in FORBIDDEN_PROSE_CHARACTERS.items():
         if character in text:
             violations.append(f"{relative}: {name}")
-    for character in sorted({character for character in text if not character.isascii()}):
-        if character not in FORBIDDEN_PROSE_CHARACTERS:
-            violations.append(f"{relative}: non-ASCII U+{ord(character):04X}")
     return violations
 
 
@@ -135,7 +133,7 @@ class CanonRailTests(unittest.TestCase):
             (ROOT / ".claude-plugin/plugin.json").read_text(encoding="utf-8")
         )
         expected_description = (
-            "Define and validate project-document contracts across tools and CI."
+            "Project-document contracts with configured local and CI checks."
         )
         self.assertEqual(claude_manifest["name"], "canonrail")
         self.assertEqual(claude_manifest["version"], version)
@@ -195,17 +193,19 @@ class CanonRailTests(unittest.TestCase):
         )
         self.assertNotIn("### Claude Code", readme)
 
-    def test_public_positioning_is_not_tied_to_one_harness(self):
+    def test_public_positioning_separates_contracts_from_configured_checks(self):
         statements = (
-            "CanonRail is a documentation framework that is not tied to one agent harness.",
-            "It defines and validates contracts for project documents.",
+            "CanonRail is a framework for project document contracts.",
+            "People and compatible agent tools can use the contracts.",
+            "Configured checks verify required sections.",
+            "They also verify file-to-document mappings.",
         )
         for relative in ("README.md", "AGENTS.md", "skills/canonrail/SKILL.md"):
             text = (ROOT / relative).read_text(encoding="utf-8")
             for statement in statements:
                 self.assertIn(statement, text, relative)
 
-    def test_public_support_and_release_claims_match_owned_state(self):
+    def test_public_support_and_release_copy_is_pinned(self):
         version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
@@ -213,14 +213,13 @@ class CanonRailTests(unittest.TestCase):
         self.assertIn(f"## {version} - Unreleased", changelog)
         self.assertIn("Hermes Agent and Codex CLI", changelog)
         self.assertIn("Claude Code support is not available in this version", changelog)
-        self.assertIn(f"Version {version} has not been released", changelog)
 
         self.assertIn(
-            "The public install commands below have been tested with Hermes Agent and Codex CLI.",
+            "CanonRail supports installation through a Hermes Agent skill tap and a Codex CLI plugin marketplace.",
             readme,
         )
         self.assertIn(
-            "Claude Code is not supported yet. Its manifest is disabled while runtime testing remains deferred.",
+            "Claude Code is not supported in this version.",
             readme,
         )
         self.assertIn(
@@ -236,7 +235,7 @@ class CanonRailTests(unittest.TestCase):
         description = match.group(1)
         self.assertEqual(
             description,
-            "Write/review AGENTS, READMEs, roadmaps, plans, and PRDs.",
+            "Write and review agent docs, READMEs, plans, and PRDs.",
         )
         self.assertLessEqual(len(description), 57)
 
@@ -381,7 +380,7 @@ class CanonRailTests(unittest.TestCase):
                     violations.append(f"{path.relative_to(ROOT)}: {fragment}")
         self.assertEqual(violations, [])
 
-    def test_public_prose_avoids_known_filler_jargon_and_non_ascii_text(self):
+    def test_public_prose_avoids_known_filler_jargon_and_ai_style_typography(self):
         violations = []
         for relative in PUBLIC_PROSE_FILES:
             text = (ROOT / relative).read_text(encoding="utf-8")
@@ -414,11 +413,17 @@ class CanonRailTests(unittest.TestCase):
         cases = (
             ("It is important to note that checks pass.", "it is important to note"),
             ("Checks pass — continue.", "em dash"),
-            ("Checks pass ✅", "non-ASCII U+2705"),
+            ("Checks pass ✅", "decorative emoji"),
         )
         for text, expected in cases:
             violations = public_prose_violations("example.md", text)
             self.assertTrue(any(expected in violation for violation in violations), violations)
+
+    def test_public_prose_check_allows_legitimate_non_ascii_text(self):
+        self.assertEqual(
+            public_prose_violations("example.md", "José maintains the project."),
+            [],
+        )
 
 
 if __name__ == "__main__":

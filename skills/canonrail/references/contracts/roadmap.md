@@ -1,6 +1,6 @@
 # Roadmap contract
 
-A roadmap shows the current phase, deferred work, and the approval needed for the next step.
+A roadmap shows the current phase, distinguishes proposed from approved work, records deferred work and decisions, and names the approval or decision needed next.
 Its presence does not grant permission to start implementation.
 
 CanonRail chose the sections and review rules below.
@@ -8,11 +8,10 @@ They are not requirements of an external roadmap standard.
 
 ## Include
 
-- The current phase and next approval or decision.
-- Planned or proposed work, with the difference stated clearly and dependencies in order.
-- Deferred decisions and their prerequisites.
-- The approval needed to move from a proposal to implementation.
-- The next decision without implying that work has begun.
+- The current phase.
+- Proposed and approved work, clearly distinguished and ordered by dependency.
+- Deferred work and decisions with their prerequisites.
+- The approval or decision needed to advance, including any move from proposal to implementation.
 
 ## Keep elsewhere
 

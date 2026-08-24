@@ -7,5 +7,3 @@
 - Add mdsmith configuration, passing and failing examples, focused tests, and CI checks.
 - Document public installation through a Hermes skill tap and the Codex plugin marketplace.
 - Include a disabled Claude Code manifest for future testing. Claude Code support is not available in this version.
-
-Version 0.1.0 has not been released.

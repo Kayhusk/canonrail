@@ -11,7 +11,7 @@ Each coding tool still controls how it finds and prioritizes instruction files.
 - Setup, build, test, and validation commands that differ from common defaults.
 - Who can approve or authorize work, safety limits, conventions, and protected paths that an agent cannot reliably infer.
 - Short links to project documents an agent must read for specific work.
-- Completion checks that apply throughout the instruction file's scope in the current tool.
+- Completion checks for work covered by the instruction file.
 
 ## Keep elsewhere
 
@@ -24,7 +24,7 @@ Each coding tool still controls how it finds and prioritizes instruction files.
 ## Review
 
 - Verify every command and path against the current repository.
-- If the current tool supports nested instruction files, verify which file applies at each changed path.
-- Remove repeated explanations and changing status.
+- If the current tool supports nested instruction files, verify which file applies to each path under review.
+- Remove repeated explanations and status that will go stale.
 - Make each link specific enough that an agent knows when to follow it.
 - Run the repository's document check and the project checks required for the change.

@@ -2,8 +2,10 @@
 
 ## Purpose
 
-CanonRail is a documentation framework that is not tied to one agent harness.
-It defines and validates contracts for project documents.
+CanonRail is a framework for project document contracts.
+People and compatible agent tools can use the contracts.
+Configured checks verify required sections.
+They also verify file-to-document mappings.
 The Agent Skill and package manifests expose the same contracts without redefining them.
 
 ## Project sources
@@ -12,7 +14,6 @@ The Agent Skill and package manifests expose the same contracts without redefini
 - `skills/canonrail/references/contracts/` defines each supported document contract.
 - `.mdsmith.yml` maps file paths to document types and required sections.
 - `skills/canonrail/SKILL.md` defines how compatible agent tools apply the contracts.
-- Package manifests expose the Agent Skill without changing the contracts.
 
 ## Working rules
 

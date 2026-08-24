@@ -3,7 +3,7 @@
 ## Status
 
 CanonRail is public.
-The [README](README.md) lists its current scope, installation support, and public limits.
+The [README](README.md) lists its current scope, supported install methods, and current limitations.
 No stable version has been released.
 
 The [source audit](docs/research/foundation-sources.md) records external quotations and the claims they support.
@@ -13,7 +13,7 @@ This file records current project state and the next decision.
 
 No implementation or release phase is active.
 
-Claude Code support, new document types, document relationship rules, hooks, and use by another project remain deferred.
+Claude Code support, new document types, document relationship rules, hooks, and adoption in another maintained project remain deferred.
 
 ## Next decision
 
@@ -23,7 +23,7 @@ Any tag or GitHub release requires separate approval.
 
 ## Guardrails
 
-- Project files and live tool output decide current project facts.
+- Use current project files and verified command output for project facts.
 - Exact quotations stay in the source audit and must not be rewritten for style.
 - A passing schema proves required structure, not truth, approval, completeness, or writing quality.
 - Package manifests expose the same CanonRail skill; they do not define separate document rules.

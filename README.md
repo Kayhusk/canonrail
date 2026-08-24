@@ -1,25 +1,23 @@
 # CanonRail
 
-CanonRail is a documentation framework that is not tied to one agent harness.
-It defines and validates contracts for project documents.
+CanonRail is a framework for project document contracts.
+People and compatible agent tools can use the contracts.
+Configured checks verify required sections.
+They also verify file-to-document mappings.
 Projects keep control of their own facts, decisions, paths, and approval rules.
 
 ## What it does
 
-- Defines one contract for each supported document type.
-- Makes the same contracts available to compatible agent tools through one Agent Skill.
-- Checks required sections and file-to-document mappings when a project configures them.
-- Uses repository checks and CI to validate saved files.
+CanonRail keeps document contracts separate from project-owned facts, paths, and approval rules.
 
 ## How it works
 
-1. Each contract states what belongs in a document, what belongs elsewhere, and what to review.
-2. The CanonRail Agent Skill lets compatible tools apply those contracts without changing them.
-3. Each project chooses its own files, path mappings, exceptions, and checks.
-4. People, agent tools, and CI can run the same repository checks against saved files.
+Each contract states what belongs in a document and what belongs elsewhere.
+Projects choose their files, path mappings, exceptions, and checks.
+Configured checks verify required sections and file-to-document mappings against saved files locally or in CI.
 
 This repository uses [mdsmith](https://mdsmith.dev/) for its current structure and path checks.
-CanonRail does not install mdsmith or add configuration to another project unless that setup work is explicitly selected.
+CanonRail installs or configures mdsmith in another project only when the user requests that setup.
 
 ## Current scope
 
@@ -31,8 +29,8 @@ CanonRail includes contracts for:
 - [execution plans](skills/canonrail/references/contracts/execplan.md);
 - [product requirements documents](skills/canonrail/references/contracts/prd.md).
 
-The public install commands below have been tested with Hermes Agent and Codex CLI.
-Claude Code is not supported yet. Its manifest is disabled while runtime testing remains deferred.
+CanonRail supports installation through a Hermes Agent skill tap and a Codex CLI plugin marketplace.
+Claude Code is not supported in this version.
 CanonRail has no stable release. Installations from `main` may change before `v0.1.0` is released.
 
 Project information:

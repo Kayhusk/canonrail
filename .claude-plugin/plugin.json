@@ -1,7 +1,7 @@
 {
   "name": "canonrail",
   "version": "0.1.0",
-  "description": "Define and validate project-document contracts across tools and CI.",
+  "description": "Project-document contracts with configured local and CI checks.",
   "author": {
     "name": "Edward Bowie",
     "url": "https://github.com/Kayhusk"

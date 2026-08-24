@@ -13,7 +13,7 @@ CanonRail chose this format for its product requirements contract.
 - User outcomes and evidence that would show improvement.
 - Included and excluded scope.
 - Product, legal, privacy, accessibility, and operational constraints.
-- Acceptance criteria stated as behavior a reviewer can observe.
+- Acceptance criteria stated as observable user or product behavior.
 
 ## Keep elsewhere
 

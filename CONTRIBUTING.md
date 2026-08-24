@@ -1,6 +1,7 @@
 # Contributing
 
-CanonRail accepts changes that make its document contracts clearer, usable across projects and harnesses, or easier to check.
+Changes should clarify CanonRail's document contracts or make them easier to check.
+They should remain usable across projects and compatible agent tools.
 
 ## Before changing a contract
 
@@ -8,7 +9,7 @@ CanonRail accepts changes that make its document contracts clearer, usable acros
 2. Confirm that the rule applies across projects rather than to one repository.
 3. Add one example that should pass and one that differs only in the rule that should fail.
 4. Keep writing requirements separate from checks that a tool can run.
-5. Update the source audit when a claim about an external standard or tool changes.
+5. Update the [source audit](docs/research/foundation-sources.md) when a claim about an external standard or tool changes.
 6. Run both repository checks.
 
 ## Verification
