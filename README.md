@@ -1,5 +1,9 @@
 # CanonRail
 
+<p align="center">
+  <img src="assets/logo-mark.svg" width="112" alt="CanonRail logo">
+</p>
+
 CanonRail is a framework for project document contracts.
 People and compatible agent tools can use the contracts.
 Configured checks verify required sections.

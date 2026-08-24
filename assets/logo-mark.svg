@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">CanonRail mark</title>
+  <desc id="desc">A geometric C boundary crossed by an orange rail to form a compact CR monogram.</desc>
+  <path fill="#1a1614" d="M21 55 45 30l23 25v124l-23 26-24-26Z"/>
+  <path fill="#1a1614" d="M45 30h126l25 25-22 23H68L45 55Z"/>
+  <path fill="#1a1614" d="M45 156h83l31 49H45l-24-26Z"/>
+  <path fill="#e3e3db" d="m103 94 58 1 62 110h-64z"/>
+  <path fill="#ff6e14" d="m114 104 41 1 52 92h-42z"/>
+</svg>
