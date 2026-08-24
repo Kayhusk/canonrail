@@ -35,25 +35,31 @@ Do not use it to invent project facts, approve work, change execution authority,
 
 Work from the repository that owns the target document. Read its current instructions and direct sources before relying on session history or generated summaries.
 
-Complete when the owning repository, target path, and current project authority are known.
+Keep the project root separate from the loaded CanonRail skill.
+Resolve target documents from the project root.
+Load CanonRail contracts only through linked skill references.
+Do not search the project for CanonRail package files.
+
+Complete when the project root, target path, and current project authority are known.
 
 ### 2. Resolve the document kind
 
-Run:
+If the project declares a document-kind command, run that exact command.
+The CanonRail repository uses `npx --yes @mdsmith/cli@0.54.0 kinds resolve <path>`.
 
-```bash
-mdsmith kinds resolve <path>
-```
+If no document-kind command is configured, classify the document from its audience and authority.
+State that deterministic kind resolution is not configured.
+Do not invoke an absent validator or add project configuration.
 
-If the project uses the pinned no-install form, run the equivalent command through `npx --yes @mdsmith/cli@0.54.0`.
-
-If no kind resolves, classify the document from its audience and authority. Do not force it into the nearest template. Add a new shared kind only when the responsibility recurs across projects.
+If the configured command resolves no kind, use the same semantic classification.
+Do not force the document into the nearest template.
+Add a new shared kind only when the responsibility recurs across projects.
 
 Complete when exactly one primary document responsibility is selected.
 
 ### 3. Read the contract
 
-Read `contracts/<kind>.md` from the active CanonRail policy pack. Then identify the project files that own the facts the document needs.
+Use the host's skill loader to read `references/contracts/<kind>.md` from the loaded CanonRail skill. Then identify the project files that own the facts the document needs.
 
 The contract governs document responsibility. The project governs names, commands, architecture, status, and approval.
 
@@ -76,15 +82,14 @@ Complete when every section serves the selected audience and responsibility.
 
 ### 5. Validate the saved document
 
-Run the project's pinned check, normally:
+Run the project's declared document check when one exists. Then run the repository's own project checks and read the saved file as its intended reader.
 
-```bash
-mdsmith check <path>
-```
+If no document check is configured, perform the semantic review.
+State that deterministic document validation is not configured.
 
-Then run the repository's own documentation and project checks. Read the saved file as its intended reader.
+Do not install a validator or copy CanonRail configuration unless the project has selected that adoption work.
 
-Complete when deterministic checks pass and the semantic review finds no ownership, authority, duplication, or unsupported-claim defect.
+Complete when all configured checks pass and the semantic review finds no ownership, authority, duplication, or unsupported-claim defect.
 
 ## Boundaries
 
@@ -100,6 +105,6 @@ Complete when deterministic checks pass and the semantic review finds no ownersh
 - [ ] Current project sources were read
 - [ ] Audience, owner, authority, and volatility are explicit
 - [ ] No private context or duplicated mutable status leaked into the document
-- [ ] Saved Markdown passed the pinned deterministic check
+- [ ] The configured deterministic check passed, or its absence was stated
 - [ ] Project checks passed
 - [ ] Final readback matches the intended reader's needs

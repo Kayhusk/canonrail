@@ -2,14 +2,18 @@
 
 ## Status
 
-Foundation reconciliation is active. The bounded CanonRail-only kind and path-binding pilot is locally verified. CanonRail still has no stable release or approved project rollout.
+Foundation reconciliation is active. The bounded pilot, five current document contracts, public install paths, and consumer behavior in Hermes and Codex are locally verified.
+Claude Code runtime validation remains deferred. CanonRail still has no stable release or approved project rollout.
 
 The exact external wording and current audit live in
 [Foundation source audit](docs/research/foundation-sources.md).
 That file is the evidence owner.
 This plan links source IDs instead of copying quotations.
 
-`PLAN.md` records approval of only the bounded pilot under `Next decision`. It does not approve plugin installation, project adoption, publication, or deployment.
+`PLAN.md` records current decisions and test status.
+
+Publication of this foundation candidate to the project repository is approved.
+It does not approve a stable release, downstream project adoption, or deployment.
 
 ## Current phase
 
@@ -37,18 +41,18 @@ It does not become the source of project truth.
 
 | Piece                       | Status                   | Evidence      | Current decision                                                                                                           |
 | --------------------------- | ------------------------ | ------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| Agent instructions contract | Candidate retained       | S05, S07, S16 | Review every current bullet against the exact source and keep CanonRail-local rules labeled as local.                      |
-| README contract             | Candidate retained       | S02, S05, S17 | Review every current bullet; do not present the current headings as a standard.                                            |
+| Agent instructions contract | Source-informed contract | S05, S07, S16 | Retain the source-backed core and label the detailed ownership, exclusions, review rules, and headings as CanonRail-local. |
+| README contract             | Source-informed contract | S02, S05, S17 | Retain human orientation, quick starts, audience needs, and clear writing; label the detailed profile as CanonRail-local.  |
 | Roadmap contract            | CanonRail-local contract | S01           | Retain the current semantics and headings as explicit local choices, not an external standard.                             |
-| Execution plan contract     | Candidate retained       | S14           | Keep it as an OpenAI-derived profile, not a universal plan standard.                                                       |
+| Execution plan contract     | OpenAI-derived contract  | S14           | Retain the living-plan requirements and label the headings and execution-authority boundary as CanonRail-local.            |
 | PRD contract                | CanonRail-local contract | S15           | Retain the current profile as a local choice for requirements information. Do not call `PRD` or its headings standardized. |
-| Portable Agent Skill        | Candidate retained       | S06, S08, S11 | Keep the standards-compliant core free of host-only requirements.                                                          |
-| Claude adapter              | Candidate retained       | S10, S11      | Validate against the current Claude plugin schema before release.                                                          |
-| Codex adapter               | Candidate retained       | S08, S09      | Validate against the current Codex plugin schema before release.                                                           |
-| Hermes adapter              | Candidate retained       | S12           | Keep it standalone and out of Hermes core.                                                                                 |
+| Portable Agent Skill        | Consumer verified        | S06, S08, S11 | Hermes and Codex loaded linked contracts from the installed skill while reviewing a separate consumer repository.          |
+| Claude adapter              | Runtime deferred         | S10, S11      | Retain the package, but do not call it host-verified without an authenticated Claude Code run.                             |
+| Codex adapter               | Host verified            | S08, S09      | Codex installed the root package through its repository marketplace and completed a read-only consumer review.             |
+| Hermes adapter              | Host verified            | S12           | Hermes passed Plugin Doctor and loaded linked contract references in an isolated consumer-review profile.                  |
 | mdsmith configuration       | Pinned pilot             | S13           | Use the current engine only for capabilities proven by a pinned execution.                                                 |
 | Required CI check           | CanonRail decision       | S07, S13      | Keep one persisted deterministic gate for adopted projects.                                                                |
-| Public wording policy       | Candidate retained       | S02, S17      | Keep public text clear, audience-aware, neutral, and free of private process language.                                     |
+| Public wording policy       | Locally verified         | S02, S17      | Keep public text neutral and enforce the private-term check across publishable text files.                                 |
 
 ### Bounded kind and path-binding pilot
 
@@ -96,27 +100,25 @@ It must be labeled as local and must not be attributed to an external standard.
 7. Validate the portable skill independently in Hermes, Claude Code, and Codex before release.
 8. Consider a release only after adapter checks and public wording review pass.
 
-Items 1 through 4 are locally verified. Items 5 through 8 remain pending.
+Items 1 through 5 and the Hermes and Codex portions of item 7 are locally verified.
+Item 6, the Claude portion of item 7, and item 8 remain pending.
 
 ## Next decision
 
-The approved pilot is limited to this CanonRail corpus:
+The portable skill passed representative matching and adjacent non-trigger cases in:
 
-| Path                                  | Expected result            |
-| ------------------------------------- | -------------------------- |
-| `AGENTS.md`                           | exactly one `agents` kind  |
-| `README.md`                           | exactly one `readme` kind  |
-| `PLAN.md`                             | exactly one `roadmap` kind |
-| `docs/research/foundation-sources.md` | no document-contract kind  |
+- an isolated Hermes profile using linked contract references;
+- Codex using the repository marketplace from a separate consumer repository.
 
-Acceptance requires:
+Public Hermes and Codex install instructions and the repository Codex marketplace are locally verified. This does not create a stable release.
 
-- every selected path to resolve to the expected result through mdsmith 0.54.0;
-- every adjacent-invalid fixture to fail through `mdsmith check -` with MDS020 and the missing heading;
-- the repository foundation test and Markdown check to pass;
-- no topology artifact, parser, dependency, hook, installation, file move, publication, or project rollout.
+Claude Code runtime validation remains deferred. Until it passes:
 
-The bounded pilot passed local acceptance. The next decision is whether a real document failure justifies one deferred relationship, order, or instruction-scope rule. No such rule is approved now.
+- CanonRail remains unreleased;
+- the Claude adapter is package-only, not host-verified;
+- no relationship, order, scope, hook, installation rollout, or project adoption work is approved.
+
+The next decision is whether to resume Claude Code runtime validation when an authenticated runtime is available.
 
 ## Guardrails
 

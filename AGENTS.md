@@ -7,7 +7,7 @@ CanonRail is an agent-portable document governance framework. The policy pack ow
 ## Project sources
 
 - `README.md` is the human-facing introduction and usage guide.
-- `contracts/` defines the semantic boundary for each document type.
+- `skills/canonrail/references/contracts/` defines the semantic boundary for each document type.
 - `.mdsmith.yml` maps paths to document kinds and deterministic schemas.
 - `skills/canonrail/SKILL.md` defines the portable authoring and review workflow.
 - Plugin manifests expose that skill without adding host-specific policy.

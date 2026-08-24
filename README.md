@@ -16,9 +16,9 @@ CanonRail combines three parts:
 
 1. Document contracts describe what each file owns and what belongs elsewhere.
 2. A portable Agent Skill guides authoring and review.
-3. [mdsmith](https://mdsmith.dev/) validates saved Markdown in local checks and CI.
+3. [mdsmith](https://mdsmith.dev/) validates saved Markdown when a project adopts the supplied configuration pattern.
 
-Hermes, Claude Code, and Codex adapters package the same skill. The repository check remains the final authority.
+Hermes, Claude Code, and Codex adapters package the same skill. Project sources and configured repository checks remain authoritative.
 
 ## Current scope
 
@@ -32,20 +32,50 @@ This foundation defines contracts for:
 
 The contracts are deliberately small. New document types can be added without changing the validator or host adapters.
 
+Hermes and Codex have completed local host validation. The Claude Code package is included, but its runtime validation is deferred.
+
 - [Project plan](PLAN.md)
 - [Foundation source audit](docs/research/foundation-sources.md)
 
+## Install
+
+Use a current Hermes Agent or Codex CLI release with plugin support.
+
+### Hermes Agent
+
+```bash
+hermes plugins install Kayhusk/canonrail --enable
+hermes plugins doctor canonrail --ci
+```
+
+Start a new Hermes session after enabling the plugin.
+
+### Codex CLI
+
+```bash
+codex plugin marketplace add Kayhusk/canonrail --ref main
+codex plugin add canonrail@canonrail
+codex plugin list --marketplace canonrail --json
+```
+
+Start a new Codex session after installing the plugin.
+
 ## Use
 
-Run the local foundation tests:
+Run CanonRail from the repository that owns the document. For example:
+
+```text
+Use CanonRail to review README.md as a human-facing README.
+```
+
+No project configuration is required for semantic review.
+If the project declares a document-kind command or document check, CanonRail uses it.
+Otherwise, CanonRail states that deterministic validation is not configured and continues with the semantic contract.
+
+To verify this repository:
 
 ```bash
 python -m unittest discover -s tests -v
-```
-
-Run the pinned Markdown checks:
-
-```bash
 npx --yes @mdsmith/cli@0.54.0 check .
 ```
 

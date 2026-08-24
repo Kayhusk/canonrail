@@ -30,18 +30,17 @@ EXPECTED_FILES = (
     "__init__.py",
     ".claude-plugin/plugin.json",
     ".codex-plugin/plugin.json",
+    ".agents/plugins/marketplace.json",
     "skills/canonrail/SKILL.md",
     ".github/workflows/ci.yml",
-    *(f"contracts/{name}.md" for name in CONTRACTS),
+    *(f"skills/canonrail/references/contracts/{name}.md" for name in CONTRACTS),
 )
-FORBIDDEN_PUBLIC_TERMS = (
-    "Artemis",
-    "SourceBand",
-    "Foldly",
-    "Apollo",
-    "MiglioHoldings",
+FORBIDDEN_PUBLIC_FRAGMENTS = (
     "/home/",
+    ".hermes/profiles/",
+    ".codex/plugins/cache/",
 )
+PUBLIC_TEXT_SUFFIXES = {".json", ".md", ".py", ".txt", ".yaml", ".yml"}
 
 
 def run_mdsmith(*args, stdin=None):
@@ -83,10 +82,55 @@ class FoundationTests(unittest.TestCase):
         self.assertRegex(hermes_manifest, rf"(?m)^version: {re.escape(version)}$")
         self.assertRegex(hermes_manifest, r"(?m)^  - canonrail$")
 
+    def test_codex_marketplace_exposes_the_root_plugin(self):
+        marketplace = json.loads(
+            (ROOT / ".agents/plugins/marketplace.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(marketplace["name"], "canonrail")
+        self.assertEqual(marketplace["interface"]["displayName"], "CanonRail")
+        self.assertEqual(len(marketplace["plugins"]), 1)
+
+        plugin = marketplace["plugins"][0]
+        self.assertEqual(plugin["name"], "canonrail")
+        self.assertEqual(plugin["source"], {"source": "local", "path": "./"})
+        self.assertEqual(
+            plugin["policy"],
+            {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
+        )
+        self.assertEqual(plugin["category"], "Productivity")
+        self.assertTrue((ROOT / plugin["source"]["path"] / ".codex-plugin/plugin.json").is_file())
+
+    def test_readme_documents_verified_public_install_paths(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn("hermes plugins install Kayhusk/canonrail --enable", readme)
+        self.assertIn("hermes plugins doctor canonrail --ci", readme)
+        self.assertIn("codex plugin marketplace add Kayhusk/canonrail --ref main", readme)
+        self.assertIn("codex plugin add canonrail@canonrail", readme)
+
+    def test_portable_skill_handles_projects_without_mdsmith(self):
+        skill = (ROOT / "skills/canonrail/SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("If the project declares a document-kind command", skill)
+        self.assertIn("If no document-kind command is configured", skill)
+        self.assertNotIn("\nRun:\n\n```bash\nmdsmith kinds resolve <path>", skill)
+
+    def test_portable_skill_separates_project_and_policy_roots(self):
+        skill = (ROOT / "skills/canonrail/SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("Keep the project root separate from the loaded CanonRail skill", skill)
+        self.assertIn("`references/contracts/<kind>.md`", skill)
+        self.assertIn("Load CanonRail contracts only through linked skill references", skill)
+        self.assertIn("Do not search the project for CanonRail package files", skill)
+
+    def test_portable_skill_bundles_each_contract_as_a_reference(self):
+        contract_dir = ROOT / "skills/canonrail/references/contracts"
+        missing = [name for name in CONTRACTS if not (contract_dir / f"{name}.md").is_file()]
+        self.assertEqual(missing, [])
+
     def test_each_contract_has_a_bounded_responsibility(self):
         required_headings = ("# ", "## Owns", "## Must not absorb", "## Review")
         for name in CONTRACTS:
-            text = (ROOT / "contracts" / f"{name}.md").read_text(encoding="utf-8")
+            text = (
+                ROOT / "skills/canonrail/references/contracts" / f"{name}.md"
+            ).read_text(encoding="utf-8")
             for heading in required_headings:
                 self.assertIn(heading, text, f"{name}.md is missing {heading}")
 
@@ -165,19 +209,27 @@ class FoundationTests(unittest.TestCase):
         self.assertEqual([name for name, _ in context.skills], ["canonrail"])
         self.assertTrue(context.skills[0][1].is_file())
 
-    def test_public_markdown_does_not_expose_private_project_jargon(self):
-        markdown_files = [
-            path
-            for path in ROOT.rglob("*.md")
-            if ".git" not in path.parts and "tests" not in path.parts
+    def test_public_text_does_not_expose_private_project_jargon(self):
+        listed = subprocess.run(
+            ("git", "ls-files", "--cached", "--others", "--exclude-standard"),
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        public_files = [
+            ROOT / relative
+            for relative in listed.stdout.splitlines()
+            if (ROOT / relative).suffix in PUBLIC_TEXT_SUFFIXES
+            and "tests" not in (ROOT / relative).parts
         ]
-        self.assertTrue(markdown_files)
+        self.assertTrue(public_files)
         violations = []
-        for path in markdown_files:
+        for path in public_files:
             text = path.read_text(encoding="utf-8")
-            for term in FORBIDDEN_PUBLIC_TERMS:
-                if term in text:
-                    violations.append(f"{path.relative_to(ROOT)}: {term}")
+            for fragment in FORBIDDEN_PUBLIC_FRAGMENTS:
+                if fragment in text:
+                    violations.append(f"{path.relative_to(ROOT)}: {fragment}")
         self.assertEqual(violations, [])
 
 

@@ -1,0 +1,20 @@
+{
+  "name": "canonrail",
+  "interface": {
+    "displayName": "CanonRail"
+  },
+  "plugins": [
+    {
+      "name": "canonrail",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
