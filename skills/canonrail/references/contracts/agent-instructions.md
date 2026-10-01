@@ -27,4 +27,5 @@ Each coding tool still controls how it finds and prioritizes instruction files.
 - If the current tool supports nested instruction files, verify which file applies to each path under review.
 - Remove repeated explanations and status that will go stale.
 - Make each link specific enough that an agent knows when to follow it.
+- Route workers to the current sequence owner instead of copying its next assignment or treating a future milestone as ready work.
 - Run the repository's document check and the project checks required for the change.

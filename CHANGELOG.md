@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.1.0 - Unreleased
+## 0.1.1 - Unreleased
+
+- Separate new-project setup from existing-project adaptation, and review design prerequisites, immediate next actions, and conflicting document directions.
+
+## 0.1.0 - Initial development
 
 - Add the CanonRail framework and package its Agent Skill for Hermes Agent and Codex CLI.
 - Add contracts for agent instructions, README files, roadmaps, execution plans, and product requirements documents.

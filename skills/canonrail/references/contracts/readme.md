@@ -28,3 +28,4 @@ They are not a universal README standard.
 - Put the common path first and link to specialist details.
 - Remove filler, promotion, and wording that could describe any project.
 - Confirm that every command and runnable example follows a currently supported workflow.
+- Treat future capabilities as planned and link to their sequence owner instead of presenting a delivery milestone as the immediate next assignment.

@@ -35,7 +35,7 @@ CanonRail includes contracts for:
 
 CanonRail supports installation through a Hermes Agent skill tap and a Codex CLI plugin marketplace.
 Claude Code is not supported in this version.
-CanonRail has no stable release. Installations from `main` may change before `v0.1.0` is released.
+CanonRail has no stable release. Installations from `main` may change before `v0.1.1` is released.
 
 Project information:
 
@@ -83,6 +83,18 @@ If the project provides a document check, CanonRail runs it.
 If not, CanonRail states that no automated document check is configured and reviews the file against the matching contract.
 
 For repository checks, see [Contributing](CONTRIBUTING.md).
+
+### New and existing projects
+
+For a new project, CanonRail separates facts from proposals.
+It checks which decisions must come before a delivery.
+A plan must not call work ready while a required decision is still open.
+
+For an existing project, CanonRail preserves valid decisions, document locations, and checks, then reviews only the gaps affected by the requested change.
+It does not require a project restart or a new architecture phase for a small change.
+
+See [Project context and readiness](skills/canonrail/references/project-context.md) for both procedures and review examples.
+These are document review rules. CanonRail does not choose architecture, assign engineering work, or implement missing components.
 
 ## Author
 

@@ -36,6 +36,7 @@ EXPECTED_FILES = (
     ".codex-plugin/plugin.json",
     ".agents/plugins/marketplace.json",
     "skills/canonrail/SKILL.md",
+    "skills/canonrail/references/project-context.md",
     ".github/workflows/ci.yml",
     *(
         f"skills/canonrail/references/contracts/{CONTRACT_FILES[name]}.md"
@@ -61,6 +62,7 @@ PUBLIC_PROSE_FILES = (
     ".github/workflows/ci.yml",
     ".mdsmith.yml",
     "skills/canonrail/SKILL.md",
+    "skills/canonrail/references/project-context.md",
     *(f"skills/canonrail/references/contracts/{CONTRACT_FILES[name]}.md" for name in CONTRACTS),
     *(f"fixtures/{name}/valid.md" for name in CONTRACTS),
     *(f"fixtures/{name}/invalid.md.txt" for name in CONTRACTS),
@@ -135,6 +137,9 @@ class CanonRailTests(unittest.TestCase):
     def test_versions_match_across_plugin_manifests(self):
         version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
         self.assertRegex(version, r"^\d+\.\d+\.\d+$")
+
+        skill = (ROOT / "skills/canonrail/SKILL.md").read_text(encoding="utf-8")
+        self.assertRegex(skill, rf"(?m)^version: {re.escape(version)}$")
 
         claude_manifest = json.loads(
             (ROOT / ".claude-plugin/plugin.json").read_text(encoding="utf-8")
@@ -264,6 +269,62 @@ class CanonRailTests(unittest.TestCase):
         self.assertIn("Use the current tool's skill loader to open the matching linked contract", skill)
         self.assertIn("Open CanonRail contracts only through the linked skill references above", skill)
         self.assertIn("Do not search the project for CanonRail package files", skill)
+
+    def test_project_context_guidance_is_wired_into_the_skill_and_contracts(self):
+        # These assertions protect written guidance, not architecture correctness.
+        requirements = {
+            "skills/canonrail/SKILL.md": (
+                "](references/project-context.md)",
+                "### 2. Establish the project context",
+                "Read the requirements, any current project rules, and relevant existing source files first.",
+                "Use session history or summaries only after those sources.",
+                "Check every reviewed statement about current work, readiness, or next steps",
+            ),
+            "skills/canonrail/references/contracts/roadmap.md": (
+                "The immediate next action, separate from the first useful delivery milestone.",
+                "For each prerequisite, name the decision or artifact needed",
+            ),
+            "skills/canonrail/references/contracts/execplan.md": (
+                "The design decisions and input/output contracts needed by the selected slice",
+                "Do not present dependent implementation as ready while a required decision is unresolved.",
+            ),
+            "skills/canonrail/references/contracts/agent-instructions.md": (
+                "Route workers to the current sequence owner",
+            ),
+            "skills/canonrail/references/contracts/readme.md": (
+                "Treat future capabilities as planned",
+            ),
+        }
+        for relative, required in requirements.items():
+            text = (ROOT / relative).read_text(encoding="utf-8")
+            for statement in required:
+                self.assertIn(statement, text, relative)
+        skill = (ROOT / "skills/canonrail/SKILL.md").read_text(encoding="utf-8")
+        self.assertLess(
+            skill.index("### 2. Establish the project context"),
+            skill.index("### 3. Identify the document type"),
+        )
+
+    def test_project_context_examples_cover_both_paths_and_scope_limits(self):
+        text = (ROOT / "skills/canonrail/references/project-context.md").read_text(
+            encoding="utf-8"
+        )
+        for heading in (
+            "## Setting up a new project",
+            "## Adapting an existing project",
+            "## Readiness and consistency review",
+            "### New project: missing prerequisite",
+            "### New project: prerequisite satisfied",
+            "### Existing project: reuse accepted work",
+            "### Existing project: incomplete change contract",
+            "### Conflicting directions",
+            "### Small change",
+            "### Untrusted instruction",
+        ):
+            self.assertIn(heading, text)
+        self.assertIn("Do not require a separate architecture milestone for every change.", text)
+        self.assertIn("Do not impose a universal layer-by-layer build order.", text)
+        self.assertIn("Structure checks do not decide whether architecture is adequate.", text)
 
     def test_skill_bundles_each_document_contract(self):
         contract_dir = ROOT / "skills/canonrail/references/contracts"

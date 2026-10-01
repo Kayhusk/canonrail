@@ -1,6 +1,6 @@
 {
   "name": "canonrail",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Project-document contracts with configured local and CI checks.",
   "author": {
     "name": "Edward Anthony Escudero Bowie",

@@ -1,7 +1,7 @@
 ---
 name: canonrail
 description: Write and review agent docs, READMEs, plans, and PRDs.
-version: 0.1.0
+version: 0.1.1
 author: Edward Anthony Escudero Bowie
 license: MIT
 platforms: [linux, macos, windows]
@@ -44,16 +44,29 @@ Treat the project's current files and systems as the source of project informati
 ### 1. Find the project root
 
 Work from the repository that contains the target document.
-Read its current instructions and source files before using session history or generated summaries.
+No repository yet? Confirm where the selected documents belong.
+Read the requirements, any current project rules, and relevant existing source files first.
+Use session history or summaries only after those sources.
+Do not create a repository to review documents.
 
 Keep the project root separate from the installed CanonRail skill.
-Resolve target documents from the project root.
+Resolve target documents from the project root or approved document destination.
 Open CanonRail contracts only through the linked skill references above.
 Do not search the project for CanonRail package files.
 
-Complete this step when the project root, target path, and controlling project instructions are known.
+Complete this step when the root or approved destination, target path, and any controlling instructions are known.
 
-### 2. Identify the document type
+### 2. Establish the project context
+
+Read [Project context and readiness](references/project-context.md) through the current tool's skill loader.
+Use its new-project branch when the necessary project decisions do not exist yet.
+Use its existing-project branch to preserve valid decisions and inspect only the gaps affected by the requested adaptation.
+Do not mistake a scaffold for a defined design, or missing prose for missing architecture.
+For a small change under adequate existing decisions, keep this check brief.
+
+Complete this step when the applicable branch, current decision owners, and any prerequisite gaps affecting the target are known.
+
+### 3. Identify the document type
 
 If the project provides a command that identifies document types, run that command exactly.
 
@@ -67,7 +80,7 @@ Do not add a shared document type unless the user asked to extend CanonRail and 
 
 Complete this step when one primary document type is selected.
 
-### 3. Read the matching contract
+### 4. Read the matching contract
 
 Use the current tool's skill loader to open the matching linked contract.
 Then read the project files that contain the facts needed by the document.
@@ -77,7 +90,7 @@ The project supplies its names, commands, architecture, status, and approval rul
 
 Complete this step when each material statement has a current project source or is clearly marked as an assumption.
 
-### 4. Write for the reader
+### 5. Write for the reader
 
 Keep the document direct and easy to scan:
 
@@ -92,7 +105,7 @@ Preserve exact legal, safety, protocol, accessibility, and approval wording when
 
 Complete this step when every section helps the intended reader understand, decide, act, or verify.
 
-### 5. Check the saved document
+### 6. Check the saved document
 
 Run the project's document check when one exists.
 Then run any other repository checks required for the task and read the saved file as its intended reader.
@@ -102,6 +115,9 @@ State that no automated document check is configured.
 
 Do not install a checker or copy CanonRail configuration unless the user explicitly requested that setup.
 
+Check every reviewed statement about current work, readiness, or next steps against the project's sequence and decision owners.
+Apply the readiness and consistency review in the project-context reference.
+Resolve conflicts only inside the authorized document scope and report remaining affected paths.
 Check for misplaced content, approval errors, repeated facts, and unsupported claims.
 Complete this step when the configured checks pass and the final read finds no remaining contract issues.
 
@@ -112,6 +128,7 @@ Complete this step when the configured checks pass and the final read finds no r
 - Project exceptions belong in the project and need a clear reason and scope.
 - Do not add front matter to common root files when path rules can identify them.
 - Do not weaken a shared rule to make an outdated document pass.
+- CanonRail reviews how documents represent design and prerequisites. It does not choose architecture, assign work, or implement missing components.
 
 ## Verification
 
@@ -119,6 +136,8 @@ Complete this step when the configured checks pass and the final read finds no r
 - [ ] Current project sources were read
 - [ ] The intended reader, purpose, and approval rules are clear
 - [ ] Each fact and any current status has a clear source
+- [ ] The project-context branch preserves existing decisions or identifies missing prerequisites
+- [ ] Immediate next actions are distinct from delivery milestones and match the current sequence owner
 - [ ] The document contains no private context or duplicated status
 - [ ] The configured document check passed, or its absence was stated
 - [ ] Required project checks passed

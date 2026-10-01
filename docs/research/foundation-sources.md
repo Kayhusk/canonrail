@@ -190,7 +190,7 @@ The same page describes plugins as self-contained directories with skills, agent
 
 ### S14 - OpenAI ExecPlans
 
-**Source class:** First-party OpenAI Cookbook article. It presents one approach, not an open standard.
+**Source class:** First-party OpenAI Cookbook article. It presents one approach, not an open standard. The current documentation marks the recipe as archived.
 
 **Source:** <https://raw.githubusercontent.com/openai/openai-cookbook/main/articles/codex_exec_plans.md>
 
@@ -274,6 +274,84 @@ The same documentation defines `skills/<skill-name>/SKILL.md` with optional `ref
 
 **Does not decide:** CanonRail's contracts, use by another project, automatic installation, or a need for a Hermes plugin when no tools or hooks are present.
 
+### S19 - Anthropic exploration and planning
+
+**Source class:** First-party coding-agent guidance.
+
+**Source:** <https://code.claude.com/docs/en/best-practices.md>, sections "Explore first, then plan, then code" and "Write an effective CLAUDE.md".
+
+> Separate research and planning from implementation to avoid solving the wrong problem.
+
+> For tasks where the scope is clear and the fix is small (like fixing a typo, adding a log line, or renaming a variable) ask Claude to do it directly.
+
+> Planning is most useful when you're uncertain about the approach, when the change modifies multiple files, or when you're unfamiliar with the code being modified. If you could describe the diff in one sentence, skip the plan.
+
+**Supports:** Investigate before planning uncertain work, separate planning from execution, and keep the process proportional to the change.
+
+**Does not decide:** A mandatory architecture phase for every project, a whole-platform build order, CanonRail approval rules, or support for Claude Code in this version.
+
+### S20 - OpenAI task context and planning
+
+**Source class:** First-party coding-agent guidance.
+
+**Source:** <https://developers.openai.com/codex/learn/best-practices>, which currently redirects to <https://learn.chatgpt.com/guides/best-practices>.
+
+> If the task is complex, ambiguous, or hard to describe well, ask Codex to plan before it starts coding.
+
+> A short, accurate `AGENTS.md` is more useful than a long file full of vague rules. Start with the basics, then add new rules only after you notice repeated mistakes.
+
+> Don’t stop at asking Codex to make a change. Ask it to create tests when needed, run the relevant checks, confirm the result, and review the work before you accept it.
+
+**Supports:** Context, constraints, and observable completion belong in the task contract. Difficult tasks benefit from planning; concise project guidance and relevant checks support execution.
+
+**Does not decide:** CanonRail's headings, architecture sufficiency, a required number of review passes, or authority to implement or publish. S14 remains a recipe, not a binding standard.
+
+### S21 - gstack engineering-plan review
+
+**Source class:** First-party community workflow authored by Garry Tan and contributors, not a provider contract or formal standard.
+
+**Source:** <https://github.com/garrytan/gstack/blob/main/plan-eng-review/sections/review-sections.md>, "Scope Challenge" and "Architecture review".
+
+> - **What already solves each sub-problem?** Inspect helpers, libraries, callers and reusable outputs: behavior and dependency/deployment boundaries. Cite authored sources; label proposed callers with their motivating plan requirement and assumptions.
+
+> * System/component boundaries, dependencies and coupling.
+
+> * One realistic production failure per new path/integration; does the plan handle it?
+
+**Supports:** Check existing solutions and interfaces before adding structure, distinguish proposed behavior from current evidence, and inspect boundaries and failure handling before treating a plan as adequate.
+
+**Does not decide:** CanonRail's project scope, universal review sections, model or agent counts, architecture choices, deployment permissions, or automatic workflow installation. Only the named sections informed this change.
+
+### S22 - Matt Pocock specifications, interfaces, and task breakdown
+
+**Source class:** First-party community engineering guidance, not a provider contract or formal standard.
+
+**Sources:** Revision `d81f3a183412e71a5b1e84ca21bc1a35eea03a60`.
+
+- [Specification synthesis](https://github.com/mattpocock/skills/blob/d81f3a183412e71a5b1e84ca21bc1a35eea03a60/skills/engineering/to-spec/SKILL.md)
+- [Task breakdown](https://github.com/mattpocock/skills/blob/d81f3a183412e71a5b1e84ca21bc1a35eea03a60/skills/engineering/to-tickets/SKILL.md)
+- [Module and interface design](https://github.com/mattpocock/skills/blob/d81f3a183412e71a5b1e84ca21bc1a35eea03a60/skills/engineering/codebase-design/SKILL.md)
+
+The specification guidance says:
+
+> Explore the repo to understand the current state of the codebase, if you haven't already. Use the project's domain glossary vocabulary throughout the spec, and respect any ADRs in the area you're touching.
+
+The task-breakdown guidance says:
+
+> - A completed slice is demoable or verifiable on its own
+
+> Give each ticket its **blocking edges**: the other tickets that must complete before it can start. A ticket with no blockers can start immediately.
+
+The module-design guidance says:
+
+> **Interface**: everything a caller must know to use the module correctly: the type signature, but also invariants, ordering constraints, error modes, required configuration, and performance characteristics. _Avoid_: API, signature (too narrow, they refer only to the type-level surface).
+
+**Supports:** Respect current code and accepted decisions, make dependencies explicit, prefer independently verifiable end-to-end slices, and describe interfaces beyond signatures or folder names.
+
+**Does not decide:** CanonRail's terminology, PRD format, required layers, project locations, tracker use, automatic issue publication, or a universal prefactoring phase. Existing seams and decisions can satisfy a prerequisite.
+
+Search results pointed to older `prd-to-plan` and `write-a-prd` paths that returned 404. Those snippets were not used as the source contract; the current revision above was read instead.
+
 ## Project decisions
 
 | CanonRail piece | Evidence | Decision | Limitation |
@@ -293,6 +371,8 @@ The same documentation defines `skills/<skill-name>/SKILL.md` with optional `ref
 | Document type and path mapping checks | S01, S02, S03, S04, S05, S13 | Narrow to current mdsmith kind and path checks | No source requires a combined universal topology field set. |
 | CI as the saved-file check | S07, S13 | Retain as a CanonRail decision | The sources support checks outside prose. CanonRail requires CI only when a project adopts automated CanonRail checks, so the same check runs against saved files. |
 | Plain public writing | S02, S17 | Retain | CanonRail chooses its exact writing rules and automated checks; the sources do not define a complete writing-quality gate. |
+| New-project setup and existing-project adaptation | S14, S19, S20, S22 | Add two branches to the existing document procedure | Branches govern evidence and document review, not architecture design, engineering assignment, or project scaffolding. |
+| Readiness and real prerequisites | S14, S19, S21, S22 | Add content review to current roadmap and execution-plan contracts | Only decisions and artifacts consumed by the selected work can block it. Structure checks do not establish readiness. |
 
 ## Selected rule-by-rule contract reviews
 
@@ -366,6 +446,36 @@ The same documentation defines `skills/<skill-name>/SKILL.md` with optional `ref
 | Distinguish requirements from suggestions | Retain - CanonRail decision | This protects implementation authority. S14 does not define CanonRail's wording test. |
 | Preserve unresolved choices | Retain - supported by sources with CanonRail details | S14 requires explicit assumptions and decision records. CanonRail forbids guessing unresolved choices. |
 | Fresh reader can resume from plan and repository | Retain - supported by source | S14 requires self-contained novice guidance and a living current state. |
+
+## Project-context rule review
+
+These additions extend existing contracts. They add no document type, topology schema, checker, host support, dependency, or automatic action.
+The PRD contract and all existing path mappings are retained.
+
+| Addition | Decision | Source and limit |
+| --- | --- | --- |
+| Select context before choosing a document type | Add - CanonRail decision | S19, S20, and S22 support investigating context. CanonRail distinguishes a new project, a scaffold with undecided design, and an established project with a scoped change. |
+| New project without a repository | Add - CanonRail decision | Direct requirements and the selected destination supply facts. CanonRail cannot invent a repository, runnable commands, or approval. |
+| Reuse existing decisions and evidence | Add - supported by source with CanonRail limits | S21 and S22 support reuse and respect for current code and decisions. CanonRail checks continued applicability and does not reopen satisfied gates merely because prose is brief. |
+| Immediate next action versus first delivery | Add - CanonRail decision | S14 and S22 support milestones and dependencies. CanonRail distinguishes the next prerequisite from the delivery it enables. |
+| Prerequisite artifact, owner, and acceptance | Add - supported by source with CanonRail fields | S14 and S22 support explicit inputs, interfaces, milestones, and blocking edges. CanonRail chooses owner and decision-state wording. |
+| Relevant responsibilities, inputs, outputs, representations, control flow, states, and failure behavior | Add - supported by source with CanonRail questions | S14 specifies interfaces and dependencies; S21 names boundaries and failure handling; S22 defines interface obligations. CanonRail selects the questions and limits them to the touched work. |
+| Minimum enabling work and end-to-end increments | Add - supported by source with CanonRail limits | S22 supports verifiable vertical slices and real blocking edges. CanonRail does not import a fixed layer order, all-platform foundation phase, or worker quota. |
+| Compatibility, migration, and recovery during adaptation | Add - supported by source | S14 describes additive changes, coexistence of implementations, validation, safe retirement, and recovery. The project decides what the actual change requires. |
+| Consistency across affected directions | Add - CanonRail decision | Current project owners define direction. CanonRail follows relevant links, reconciles only authorized documents, and reports conflicting application copy without editing code. |
+| Concise instruction routing and truthful README claims | Add - supported by source with CanonRail limits | S16 and S20 support concise accurate guidance. CanonRail routes instructions to the sequence owner and avoids copied assignments or false readiness. |
+| Proportional review and no automatic execution | Retain and clarify - CanonRail decision with source support | S19 supports direct small changes and conditional planning. No comparator supplies CanonRail with implementation, installation, publication, or deployment authority. |
+
+### Examples and acceptance
+
+The portable [project-context reference](../../skills/canonrail/references/project-context.md) contains the two procedures and seven content-review cases.
+The new-project pair changes only whether the required design contracts exist.
+The existing-project pair changes only whether the proposed record exchange is covered by accepted contracts.
+The remaining cases cover contradictory direction, a small change, and untrusted workflow instructions.
+
+The Python checks protect the reference's package link, scenario coverage, and selected contract wording against accidental removal.
+They do not judge architecture, interpret arbitrary project plans, or prove that an agent will follow the guidance.
+Use a separate focused content review of the cases for that judgment. mdsmith continues to check only configured structure and mappings.
 
 ## Selected topology scope
 
